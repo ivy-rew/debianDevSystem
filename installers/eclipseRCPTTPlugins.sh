@@ -1,12 +1,14 @@
 #!/bin/bash
 
+version=$1
+
 # installs:
 #-- Marketplace
 #-- MAVEN (m2e)
 #-- PATH-TOOLS
 #-- AnyEditTools
 #-- SubClipse
-cd /opt/rcptt2.3.0.ide/rcptt
+cd "/opt/rcptt$version.ide/rcptt"
 ./rcptt \
 -clean -purgeHistory \
 -application org.eclipse.equinox.p2.director \

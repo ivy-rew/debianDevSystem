@@ -8,4 +8,4 @@ wget https://mirrors.dotsrc.org/eclipse//rcptt/release/$version/ide/rcptt.ide-$v
 sudo unzip rcptt.ide*.zip -d /opt/rcptt$version.ide
 rm rcptt.ide*.zip
 
-$DIR/eclipseRCPTTPlugins.sh
+$DIR/eclipseRCPTTPlugins.sh $version
