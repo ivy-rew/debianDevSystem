@@ -3,7 +3,7 @@
 sudo apt install -y pidgin
 
 ### add skype ###
-sudo apt-get install libpurple-dev libjson-glib-dev cmake gcc
+sudo apt install -y libpurple-dev libjson-glib-dev cmake gcc
 git clone git://github.com/EionRobb/skype4pidgin.git
 cd skype4pidgin/skypeweb
 mkdir build
