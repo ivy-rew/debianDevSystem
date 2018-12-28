@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=Outlook 365 [live]
+Exec=/home/rew/debianDevSystem/bin/outlook.sh
+Comment=
+Terminal=false
+Icon=mail-generic
+Type=Application
+Name[en_US]=outlook365.desktop
