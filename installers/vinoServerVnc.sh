@@ -7,7 +7,7 @@ gsettings set org.gnome.Vino prompt-enabled false
 gsettings set org.gnome.Vino authentication-methods "['vnc']"
 
 # define password
-echo -n Enter you password: 
+echo -n "Enter VNC remote access password:" 
 read -s password
 echo $password > /tmp/vncpass.txt
 ENCODED=$(base64 /tmp/vncpass.txt)
