@@ -12,4 +12,5 @@ The script are designed to work for me in my current working environment ... fee
 1. clone or download this repo into your user home (e.g. /home/rew/debianDevSystem)
 2. run a cool composite installer script `debAdmin.sh`, `debCommunicator.sh` or `debEnv.sh`
 3. manually add the line `export PATH=$PATH:/home/rew/debianDevSystem/bin` to `~/.bashrc`.
-4. use the installed tools...
+4. optionally copy the `.bash_aliases` file into your user home dir.
+5. use the installed tools...
