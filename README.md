@@ -7,3 +7,9 @@ The script are designed to work for me in my current working environment ... fee
 ## Tested
 - Linux Mint 19.1 (Ubuntu 18.04 LTS)
 - Nemo (Mint Cinnamon File Browser) specific extensions...
+
+## How to use
+1. clone or download this repo into your user home (e.g. /home/rew/debianDevSystem)
+2. run a cool composite installer script `debAdmin.sh`, `debCommunicator.sh` or `debEnv.sh`
+3. manually add the line `export PATH=$PATH:/home/rew/debianDevSystem/bin` to `~/.bashrc`.
+4. use the installed tools...
