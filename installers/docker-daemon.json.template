@@ -1,0 +1,5 @@
+{
+  "insecure-registries": ["zugprodocker:5000"],
+  "debug": true,
+  "graph": "/mnt/data/blob/docker"
+}
