@@ -30,6 +30,7 @@ sudo apt install -y curl jq
 # composite installers
 $DIR/docker-ce.sh
 $DIR/updatePostman.sh
+$DIR/eclipseRCP.sh
 $DIR/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
 
