@@ -14,7 +14,7 @@ sudo apt install -y git
 sudo apt install -y libgnome-keyring-dev
 cd /usr/share/doc/git/contrib/credential/gnome-keyring && sudo make
 git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
-$DIR/updateGitkraken.sh
+$DIR/updateGitKraken.sh
 
 # scm-svn
 sudo apt install -y subversion
