@@ -32,5 +32,9 @@ $DIR/docker-ce.sh
 $DIR/updatePostman.sh
 $DIR/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
+
+# interactive:
+echo "select jdk8 as default JRE!"
+sudo update-alternatives --config java
 $DIR/oxygenXmlAuthor.sh
 
