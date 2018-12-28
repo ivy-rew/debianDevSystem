@@ -31,5 +31,6 @@ sudo apt install -y curl jq
 $DIR/docker-ce.sh
 $DIR/updatePostman.sh
 $DIR/eclipseRCPTT.sh
+$DIR/geckodriver-install.sh
 $DIR/oxygenXmlAuthor.sh
 
