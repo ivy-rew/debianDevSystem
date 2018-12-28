@@ -6,4 +6,4 @@ sudo add-apt-repository ppa:oguzhaninan/stacer
 sudo apt update
 sudo apt install -y stacer
 
-sudo apt install cockpit
+sudo apt install -y cockpit
