@@ -1,26 +1,17 @@
 #!/bin/bash  
 
-JOB=Trunk_All
+source jenkinsGet.sh
+
+JOB=ivy-core_product
 if [ ! -z "$1" ]
   then
     JOB=$1
 fi
 
-JSON=`curl -s "http://zugprobldmas/job/$JOB/lastSuccessfulBuild/api/json?pretty=true"`
-ZIP=`echo $JSON | jq -r '.artifacts[].fileName' | grep 'AxonIvyEngine[0-9\.]*_All_x64.zip'`
-REVISION=`echo $ZIP | grep -oP '[0-9]{5}'`
-echo "found revision $REVISION"
+JENKINS=zugprojenkins
+BRANCH=master
+ARTIFACT=engine
+ARTIFACT_PATTERN=AxonIvyEngine[0-9\.]*_All_x64.zip
 
-PATH=`echo $JSON | jq -r '.artifacts[].relativePath' | grep 'AxonIvyEngine[0-9\.]*_All_x64.zip'`
-URL=http://zugprobldmas/job/$JOB/lastSuccessfulBuild/artifact/$PATH
-NEWZIP=`/usr/bin/wget $URL -P /tmp | grep 'saving to:.*'`
-echo $NEWZIP
+jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
 
-echo "Downloaded $ZIP. Enter a description for this engine"
-read DESCRIPTION
-
-
-UNPACKED=/mnt/data/axonIvyProducts/engine_$REVISION-$DESCRIPTION
-echo "Extracting to $UNPACKED"
-time /usr/bin/unzip -q "/tmp/$ZIP" -d $UNPACKED
-`/usr/bin/nemo $UNPACKED`
