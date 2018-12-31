@@ -9,3 +9,6 @@ $DIR/outlook365/installOutlook.sh
 
 # browse
 $DIR/firefox/installFirefox.sh
+
+# screenshot
+$DIR/installShutter.sh

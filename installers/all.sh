@@ -4,5 +4,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 admin/debRemote.sh
 admin/debAdmin.sh
-office/debCommunicator.sh
+office/debOffice.sh
 dev/devEnv.sh
