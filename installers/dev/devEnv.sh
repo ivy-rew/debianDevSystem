@@ -25,9 +25,6 @@ sudo apt install -y nemo-rabbitvcs
 sudo apt install -y libwebkitgtk-1.0.0
 sudo apt install -y libsvn-java
 
-# newEngine / newDesigner deps
-sudo apt install -y curl jq
-
 # composite installers
 $DIR/docker-ce.sh
 $DIR/updatePostman.sh

@@ -11,6 +11,14 @@ ARTIFACT=$4
 ARTIFACT_PATTERN=$5
 
 function jenkinsGet (){
+    # ensure dependent binaries exist
+    if ! [ -x "$(command -v curl)" ]; then
+      sudo apt install -y curl
+    fi
+    if ! [ -x "$(command -v jq)" ]; then
+      sudo apt install -y jq
+    fi
+
     JSON=`curl -s "http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild/api/json?pretty=true"`
     ZIP=`echo $JSON | jq -r '.artifacts[].fileName' | grep $ARTIFACT_PATTERN`
     REVISION=`echo $ZIP | grep -oP '[0-9]{10}'`
