@@ -7,7 +7,7 @@ if [ ! -z "$1" ]
 fi
 
 cd "$ECLIPSE_HOME"
-./eclipse \
+sudo ./eclipse \
 -application org.eclipse.equinox.p2.director \
 -clean -purgeHistory \
 -noSplash \

@@ -9,7 +9,7 @@ version=$1
 #-- AnyEditTools
 #-- SubClipse
 cd "/opt/rcptt$version.ide/rcptt"
-./rcptt \
+sudo ./rcptt \
 -clean -purgeHistory \
 -application org.eclipse.equinox.p2.director \
 -noSplash \
