@@ -1,17 +1,20 @@
 #!/bin/bash  
-JOB=Linux_Trunk_DesignerAndServer
+JOB=ivy-core_product
 if [ ! -z "$1" ]
   then
     JOB=$1
 fi
 
-JSON=`curl -s "http://zugprobldmas/job/$JOB/lastSuccessfulBuild/api/json?pretty=true"`
+JENKINS=zugprojenkins
+BRANCH=master
+
+JSON=`curl -s "http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild/api/json?pretty=true"`
 ZIP=`echo $JSON | jq -r '.artifacts[].fileName' | grep 'AxonIvyDesigner.*_Linux_x64.zip'`
 REVISION=`echo $ZIP | grep -oP '[0-9]{10}'`
 echo "found revision $REVISION"
 
 PATH=`echo $JSON | jq -r '.artifacts[].relativePath' | grep 'AxonIvyDesigner.*_Linux_x64.zip'`
-URL=http://zugprobldmas/job/$JOB/lastSuccessfulBuild/artifact/$PATH
+URL=http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild/artifact/$PATH
 NEWZIP=`/usr/bin/wget $URL -P /tmp | grep 'saving to:.*'`
 echo $NEWZIP
 
