@@ -11,8 +11,4 @@ $DIR/vinoServerVnc.sh
 sudo apt install -y remmina
 sudo apt install -y remmina-plugin-rdp
 
-# cooperate 
-$DIR/pidginAndSkype.sh
-$DIR/outlook365/installOutlook.sh
-
 
