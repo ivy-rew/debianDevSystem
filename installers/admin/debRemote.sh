@@ -8,8 +8,9 @@ sudo apt install -y openssh-server
 $DIR/vinoServerVnc.sh
 $DIR/serveAnonymVncSession.sh
 
-# rdp remote control
+# rdp remote control (with RDP & KeyRing integration)
 sudo apt install -y remmina
 sudo apt install -y remmina-plugin-rdp
+sudo apt install -y remmina-plugin-secret
 
 
