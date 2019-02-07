@@ -7,3 +7,4 @@ sudo apt update
 sudo apt install -y stacer
 
 sudo apt install -y cockpit
+sudo apt install -y gnome-system-log 
