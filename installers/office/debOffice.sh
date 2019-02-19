@@ -13,3 +13,7 @@ $DIR/firefox/installFirefox.sh
 # screenshot
 $DIR/installShutter.sh
 $DIR/installPeekGifRecorder.sh
+
+# password manager
+sudo apt install -y keepassx
+
