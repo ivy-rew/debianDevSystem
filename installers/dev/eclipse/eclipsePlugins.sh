@@ -23,3 +23,8 @@ PathToolsFeature.feature.group,\
 AnyEditTools.feature.group,\
 org.tigris.subversion.subclipse.feature.group \
 -vmargs -Declipse.p2.mirrors=true -Djava.net.preferIPv4Stack=true
+
+#fix permission issue: eclipse not startable es installed plugins are owned by root
+ECLIPSE_OWNER=`stat -c %U $ECLIPSE_HOME`
+sudo chown -R $ECLIPSE_OWNER:$ECLIPSE_OWNER $ECLIPSE_HOME
+
