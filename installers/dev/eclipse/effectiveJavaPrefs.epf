@@ -1,0 +1,13 @@
+#Tue May 14 15:49:31 CEST 2019
+\!/=
+/instance/PathTools/fileExploreCommand=nemo {path}
+/instance/PathTools/folderExploreCommand=nemo {path}
+/instance/org.eclipse.ui.workbench/org.eclipse.ui.commands=<?xml version\="1.0" encoding\="UTF-8"?>\n<org.eclipse.ui.commands>\n<keyBinding commandId\="org.eclipse.jdt.junit.junitShortcut.rerunLast" contextId\="org.eclipse.ui.contexts.window" keyConfigurationId\="org.eclipse.ui.defaultAcceleratorConfiguration" keySequence\="ALT+T"/>\n</org.eclipse.ui.commands>
+/instance/org.eclipse.ui.workbench/org.eclipse.wst.sse.ui.textfont=1|Monospace|9.0|0|GTK|1|;
+@PathTools=1.0.67
+@org.eclipse.jdt.core=3.17.0.v20190306-2240
+@org.eclipse.jdt.debug.ui=3.10.200.v20190226-0733
+@org.eclipse.jdt.junit=3.11.300.v20190130-1425
+@org.eclipse.jdt.launching=3.13.0.v20190222-0937
+@org.eclipse.jdt.ui=3.17.0.v20190304-0658
+file_export_version=3.0
