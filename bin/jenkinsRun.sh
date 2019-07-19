@@ -16,6 +16,15 @@ JENKINS=zugprojenkins
 URL="http://zugprojenkins/job/$JOB/"
 
 
+# ensure dependent binaries exist
+if ! [ -x "$(command -v curl)" ]; then
+  sudo apt install -y curl
+fi
+if ! [ -x "$(command -v jq)" ]; then
+  sudo apt install -y jq
+fi
+
+
 function triggerBuilds() {
     BRANCH=$1
     echo "triggering builds for $BRANCH"
