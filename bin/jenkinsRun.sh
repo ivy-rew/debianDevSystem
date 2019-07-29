@@ -3,6 +3,8 @@
 # [BETA]
 # attempt to automate lazy triggered builds that belong to my just PUSHED contents...
 # 
+# [Inspired]
+# ...by http://www.inanzzz.com/index.php/post/jnrg/running-jenkins-build-via-command-line
 
 SELECT=$1
 
@@ -30,12 +32,16 @@ function triggerBuilds() {
     echo "triggering builds for $BRANCH"
 
     user=`whoami`
-    echo -n "Enter JENKINS password for $user:" 
-    echo -n ""
-    read -s password
-    echo ""
+    if [ -z ${JENKINS_TOKEN+x} ]
+    then
+        echo "Jenkins API token not found as enviroment variable called 'JENKINS_TOKEN'. Therefore password for jenkins must be entered:"
+        echo -n "Enter JENKINS password for $user:" 
+        echo -n ""
+        read -s JENKINS_TOKEN
+        echo ""
+    fi
 
-    CRUMB=`wget -q --auth-no-challenge --user $user --password $password --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+    CRUMB=`wget -q --auth-no-challenge --user $user --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
     echo "GOT CRUMB: " $CRUMB
 
     JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
@@ -48,7 +54,7 @@ function triggerBuilds() {
         fi
         RUN_JOB=${RUN:1:-1}
         BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH/build?delay=0sec"
-        curl -I -X POST -u "$user:$password" "$BUILD_URL" -H "$CRUMB"
+        curl -I -X POST -u "$user:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"
     done
 }
 
