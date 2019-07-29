@@ -54,7 +54,13 @@ function triggerBuilds() {
         fi
         RUN_JOB=${RUN:1:-1}
         BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH/build?delay=0sec"
-        curl -I -X POST -u "$user:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"
+        RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$user:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
+        echo "jenkins returned HTTP code : $RESPONSE"
+        
+        if [ "$RESPONSE" == 404 ] ; then
+            # job may requires a manual rescan to expose our new branch
+            rescan "http://$JENKINS/job/$RUN_JOB/"
+        fi
     done
 }
 
@@ -68,11 +74,12 @@ function getAvailableBranches()
 
 function rescan()
 {
-  $command="build?delay=0"
-  SCAN_URL="$URL$command"
+  JOB_URL=$1
+  ACTION="build?delay=0"
+  SCAN_URL="$JOB_URL$ACTION"
   user=`whoami`
   curl -I -X POST -u "$user:$JENKINS_TOKEN" "$SCAN_URL" -H "$CRUMB"
-  echo "rescan triggered"
+  echo "rescan triggered for $SCAN_URL"
 }
 
 BRANCHES=$( getAvailableBranches )
@@ -83,7 +90,7 @@ do
     if [ "$BRANCH_SELECTED" == "re-scan" ]
     then
         echo 're-scanning [beta]'
-        rescan
+        rescan $URL
         BRANCHES=$( getAvailableBranches )
     else
         triggerBuilds ${BRANCH_SELECTED:1:-1} #kill hyphens
