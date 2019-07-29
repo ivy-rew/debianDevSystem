@@ -46,7 +46,7 @@ function triggerBuilds() {
 
     JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
     JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test'`
-    select RUN in none '"ivy-core_ci"' $JOBS
+    select RUN in none '"ivy-core_ci"' '"ivy-core_product"' $JOBS
     do
         if [ "$RUN" == "none" ]
         then
@@ -59,7 +59,7 @@ function triggerBuilds() {
         
         if [ "$RESPONSE" == 404 ] ; then
             # job may requires a manual rescan to expose our new branch
-            rescan "http://$JENKINS/job/$RUN_JOB/"
+            rescanBranches "http://$JENKINS/job/$RUN_JOB/"
         fi
     done
 }
@@ -72,7 +72,7 @@ function getAvailableBranches()
   echo $BRANCHES
 }
 
-function rescan()
+function rescanBranches()
 {
   JOB_URL=$1
   ACTION="build?delay=0"
@@ -90,7 +90,7 @@ do
     if [ "$BRANCH_SELECTED" == "re-scan" ]
     then
         echo 're-scanning [beta]'
-        rescan $URL
+        rescanBranches $URL
         BRANCHES=$( getAvailableBranches )
     else
         triggerBuilds ${BRANCH_SELECTED:1:-1} #kill hyphens
