@@ -65,6 +65,16 @@ function getAvailableBranches()
   BRANCHES=`echo $JSON | jq '.jobs[].name'`
   echo $BRANCHES
 }
+
+function rescan()
+{
+  $command="build?delay=0"
+  SCAN_URL="$URL$command"
+  user=`whoami`
+  curl -I -X POST -u "$user:$JENKINS_TOKEN" "$SCAN_URL" -H "$CRUMB"
+  echo "rescan triggered"
+}
+
 BRANCHES=$( getAvailableBranches )
 
 echo "SELECT branch of $URL"
@@ -73,6 +83,7 @@ do
     if [ "$BRANCH_SELECTED" == "re-scan" ]
     then
         echo 're-scanning [beta]'
+        rescan
         BRANCHES=$( getAvailableBranches )
     else
         triggerBuilds ${BRANCH_SELECTED:1:-1} #kill hyphens
