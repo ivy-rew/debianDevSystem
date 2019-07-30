@@ -5,6 +5,7 @@ sudo apt update
 
 sudo apt install -y openjdk-8-jdk
 sudo apt install -y openjdk-8-source
+sudo apt install -y openjdk-11-source
 sudo apt install -y maven
 sudo apt install -y openjfx
 sudo apt install -y visualvm
