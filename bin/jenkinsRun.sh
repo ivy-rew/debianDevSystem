@@ -16,7 +16,7 @@ fi
 
 JENKINS=zugprojenkins
 URL="http://zugprojenkins/job/$JOB/"
-
+JENKINS_USER=`whoami`
 
 # ensure dependent binaries exist
 if ! [ -x "$(command -v curl)" ]; then
@@ -31,17 +31,17 @@ function triggerBuilds() {
     BRANCH=$1
     echo "triggering builds for $BRANCH"
 
-    user=`whoami`
     if [ -z ${JENKINS_TOKEN+x} ]
     then
         echo "Jenkins API token not found as enviroment variable called 'JENKINS_TOKEN'. Therefore password for jenkins must be entered:"
-        echo -n "Enter JENKINS password for $user:" 
+        echo -n "Enter JENKINS password for $JENKINS_USER:" 
         echo -n ""
         read -s JENKINS_TOKEN
         echo ""
     fi
 
-    CRUMB=`wget -q --auth-no-challenge --user $user --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+    # get XSS preventention token
+    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
     echo "GOT CRUMB: " $CRUMB
 
     JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
@@ -54,7 +54,7 @@ function triggerBuilds() {
         fi
         RUN_JOB=${RUN:1:-1}
         BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH/build?delay=0sec"
-        RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$user:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
+        RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
         echo "jenkins returned HTTP code : $RESPONSE"
         
         if [ "$RESPONSE" == 404 ] ; then
@@ -77,9 +77,20 @@ function rescanBranches()
   JOB_URL=$1
   ACTION="build?delay=0"
   SCAN_URL="$JOB_URL$ACTION"
-  user=`whoami`
-  curl -I -X POST -u "$user:$JENKINS_TOKEN" "$SCAN_URL" -H "$CRUMB"
-  echo "rescan triggered for $SCAN_URL"
+  HTTP_STATUS=`curl --write-out %{http_code} --silent --output /dev/null -I -L -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$SCAN_URL"`
+  echo "triggered rescan triggered for $SCAN_URL"
+  
+  if [[ $HTTP_STATUS == *"200"* ]]; then
+    echo "jenkins returned status $HTTP_STATUS. Waiting for index job to finish"
+    ACTION="indexing/consoleText"
+    until [[ $(curl --write-out --output /dev/null --silent $JOB_URL$ACTION) == *"Finished:"* ]]; do
+      printf "."
+      sleep 1
+    done
+  else
+    echo "failed: Jenkins returned $HTTP_STATUS"
+  fi
+
 }
 
 BRANCHES=$( getAvailableBranches )
