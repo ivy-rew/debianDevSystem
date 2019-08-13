@@ -26,13 +26,18 @@ if ! [ -x "$(command -v jq)" ]; then
   sudo apt install -y jq
 fi
 
+# color constants
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 function getAvailableBranches()
 {
   JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
   BRANCHES=`echo $JSON | jq '.jobs[].name' \
    | sed -e 's|%2F|/|' \
    | sed -e 's|"||g' `
-  echo $BRANCHES
+  echo -e $BRANCHES
 }
 
 function getAvailableTestJobs()
@@ -46,7 +51,7 @@ function getAvailableTestJobs()
 
 function triggerBuilds() {
     BRANCH=$1
-    echo "triggering builds for $BRANCH"
+    echo -e "triggering builds for ${GREEN}${BRANCH}${NC}"
 
     if [ -z ${JENKINS_TOKEN+x} ]
     then
