@@ -29,14 +29,18 @@ fi
 function getAvailableBranches()
 {
   JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=`echo $JSON | jq '.jobs[].name' `
+  BRANCHES=`echo $JSON | jq '.jobs[].name' \
+   | sed -e 's|%2F|/|' \
+   | sed -e 's|"||g' `
   echo $BRANCHES
 }
 
 function getAvailableTestJobs()
 {
   JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
-  JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test'`
+  JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test' \
+   | sed -e 's|%2F|/|' \
+   | sed -e 's|"||g' `
   echo $JOBS
 }
 
@@ -57,14 +61,15 @@ function triggerBuilds() {
     CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
 
     JOBS=$( getAvailableTestJobs )
-    select RUN in none '"ivy-core_ci"' '"ivy-core_product"' $JOBS
+    select RUN in none 'ivy-core_ci' 'ivy-core_product' $JOBS
     do
         if [ "$RUN" == "none" ]
         then
             break
         fi
-        RUN_JOB=${RUN:1:-1}
-        BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH/build?delay=0sec"
+        RUN_JOB=${RUN}
+        BRANCH_ENCODED=`echo $BRANCH | sed -e 's|/|%2F|'` 
+        BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
         RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
         echo "jenkins returned HTTP code : $RESPONSE"
         
@@ -106,7 +111,7 @@ do
         rescanBranches $URL
         BRANCHES=$( getAvailableBranches )
     else
-        triggerBuilds ${BRANCH_SELECTED:1:-1} #kill hyphens
+        triggerBuilds ${BRANCH_SELECTED}
         break
     fi
 done
