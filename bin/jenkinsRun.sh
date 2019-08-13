@@ -26,6 +26,19 @@ if ! [ -x "$(command -v jq)" ]; then
   sudo apt install -y jq
 fi
 
+function getAvailableBranches()
+{
+  JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
+  BRANCHES=`echo $JSON | jq '.jobs[].name' `
+  echo $BRANCHES
+}
+
+function getAvailableTestJobs()
+{
+  JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
+  JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test'`
+  echo $JOBS
+}
 
 function triggerBuilds() {
     BRANCH=$1
@@ -42,10 +55,8 @@ function triggerBuilds() {
 
     # get XSS preventention token
     CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
-    echo "GOT CRUMB: " $CRUMB
 
-    JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
-    JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test'`
+    JOBS=$( getAvailableTestJobs )
     select RUN in none '"ivy-core_ci"' '"ivy-core_product"' $JOBS
     do
         if [ "$RUN" == "none" ]
@@ -62,14 +73,6 @@ function triggerBuilds() {
             rescanBranches "http://$JENKINS/job/$RUN_JOB/"
         fi
     done
-}
-
-#get available jobs: 
-function getAvailableBranches()
-{
-  JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=`echo $JSON | jq '.jobs[].name'`
-  echo $BRANCHES
 }
 
 function rescanBranches()
@@ -90,7 +93,6 @@ function rescanBranches()
   else
     echo "failed: Jenkins returned $HTTP_STATUS"
   fi
-
 }
 
 BRANCHES=$( getAvailableBranches )
