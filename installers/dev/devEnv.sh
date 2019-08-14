@@ -23,7 +23,8 @@ sudo apt install -y subversion
 sudo apt install -y nemo-rabbitvcs
 
 # general eclipse deps
-sudo apt install -y libwebkitgtk-1.0.0
+sudo apt install -y libwebkit2gtk-4.0-37
+sudo apt install -y libswt-gtk-4-java
 sudo apt install -y libsvn-java
 
 # composite installers
@@ -34,7 +35,5 @@ $DIR/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
 
 # interactive:
-echo "select jdk8 as default JRE!"
-sudo update-alternatives --config java
 $DIR/oxygenXmlAuthor.sh
 
