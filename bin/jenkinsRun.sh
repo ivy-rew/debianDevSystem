@@ -65,7 +65,6 @@ function triggerBuilds() {
     # get XSS preventention token
     CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
 
-    BRANCH_ENCODED=`echo $BRANCH | sed -e 's|/|%2F|'` 
     JOBS=$( getAvailableTestJobs )
     select RUN in none 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
     do
@@ -75,19 +74,11 @@ function triggerBuilds() {
         fi
         if [ "$RUN" == "new view" ]
         then
-            # prepare a simple view: listing all jobs of my feature branch
-            MYVIEWS_URL="http://$JENKINS/user/${JENKINS_USER}/my-views"
-            curl -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
-            CONFIG_URL="${MYVIEWS_URL}/view/${BRANCH_ENCODED}/config.xml"
-            curl -X GET "${CONFIG_URL}" -o viewConf.xml
-            ISSUE_REGEX=$( echo $BRANCH | sed -e 's|.*/|\.*|')
-            sed -e "s|<recurse>false</recurse>|<includeRegex>${ISSUE_REGEX}</includeRegex><recurse>true></recurse>|" viewConf.xml > viewConf2.xml
-            curl -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
-            rm viewConf*.xml
-            echo "View created: ${MYVIEWS_URL}/view/${BRANCH_ENCODED}/"
+            createView $BRANCH
             break
         fi
         RUN_JOB=${RUN}
+        BRANCH_ENCODED=`encode $BRANCH`
         BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
         RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
         echo "jenkins returned HTTP code : $RESPONSE"
@@ -117,6 +108,27 @@ function rescanBranches()
   else
     echo "failed: Jenkins returned $HTTP_STATUS"
   fi
+}
+
+function createView()
+{
+  # prepare a simple view: listing all jobs of my feature branch
+  BRANCH=$1
+  BRANCH_ENCODED=`encode $BRANCH`
+  MYVIEWS_URL="https://$JENKINS/user/${JENKINS_USER}/my-views"
+  curl -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
+  CONFIG_URL="${MYVIEWS_URL}/view/${BRANCH_ENCODED}/config.xml"
+  curl -k -s -X GET "${CONFIG_URL}" -o viewConf.xml
+  ISSUE_REGEX=$( echo $BRANCH | sed -e 's|.*/|\.*|')
+  sed -e "s|<recurse>false</recurse>|<includeRegex>${ISSUE_REGEX}</includeRegex><recurse>true></recurse>|" viewConf.xml > viewConf2.xml
+  curl -k -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
+  rm viewConf*.xml
+  echo "View created: ${MYVIEWS_URL}/view/${BRANCH_ENCODED}/"
+}
+
+function encode()
+{
+  echo $1 | sed -e 's|/|%2F|' 
 }
 
 BRANCHES=$( getAvailableBranches )
