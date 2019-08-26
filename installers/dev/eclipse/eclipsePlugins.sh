@@ -22,6 +22,7 @@ org.eclipse.wb.rcp.feature.feature.group,\
 PathToolsFeature.feature.group,\
 AnyEditTools.feature.group,\
 org.tigris.subversion.subclipse.feature.group,\
+org.tigris.subversion.clientadapter.svnkit.feature.feature.group,\
 \
 org.sf.feeling.decompiler,\
 org.sf.feeling.decompiler.cfr,\
