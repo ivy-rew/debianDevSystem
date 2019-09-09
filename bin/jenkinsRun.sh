@@ -18,6 +18,8 @@ JENKINS=zugprojenkins
 URL="http://zugprojenkins/job/$JOB/"
 JENKINS_USER=`whoami`
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # ensure dependent binaries exist
 if ! [ -x "$(command -v curl)" ]; then
   sudo apt install -y curl
@@ -75,12 +77,12 @@ function triggerBuilds() {
         fi
         if [ "$RUN" == "getDesigner" ]
         then
-            $(newDesigner.sh "$BRANCH_ENCODED")
+            $($DIR/newDesigner.sh "$BRANCH_ENCODED")
             break
         fi
         if [ "$RUN" == "getEngine" ]
         then
-            $(newEngine.sh "$BRANCH_ENCODED")
+            $($DIR/newEngine.sh "$BRANCH_ENCODED")
             break
         fi
         if [ "$RUN" == "new view" ]
