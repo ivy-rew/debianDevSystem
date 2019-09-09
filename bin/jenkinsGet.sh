@@ -23,9 +23,15 @@ function jenkinsGet (){
     DL_URL=$SUCCESS_URL/artifact/$REL_PATH
     wget "$DL_URL" -P /tmp
     echo "Downloaded $ZIP. Enter a description for this $ARTIFACT"
-    read DESCRIPTION
+    if [ "$BRANCH" == "master" ]
+      then
+        read PRODUCT_DESCRIPTOR
+      else
+        BRANCH_DECODED=$(echo $BRANCH | sed -e 's|%252F|/|g')
+        PRODUCT_DESCRIPTOR=$(basename "$BRANCH_DECODED")
+    fi
 
-    UNPACKED="/mnt/data/axonIvyProducts/${ARTIFACT}_$REVISION-$DESCRIPTION"
+    UNPACKED="/mnt/data/axonIvyProducts/${ARTIFACT}_$REVISION-$PRODUCT_DESCRIPTOR"
     echo "Extracting to $UNPACKED"
     unzip -q "/tmp/$ZIP" -d "$UNPACKED"
     $(nemo "$UNPACKED" & )
