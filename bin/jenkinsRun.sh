@@ -66,10 +66,21 @@ function triggerBuilds() {
     CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
 
     JOBS=$( getAvailableTestJobs )
-    select RUN in none 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
+    select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
     do
+        BRANCH_ENCODED=`encode $BRANCH`
         if [ "$RUN" == "none" ]
         then
+            break
+        fi
+        if [ "$RUN" == "getDesigner" ]
+        then
+            $(newDesigner.sh "$BRANCH_ENCODED")
+            break
+        fi
+        if [ "$RUN" == "getEngine" ]
+        then
+            $(newEngine.sh "$BRANCH_ENCODED")
             break
         fi
         if [ "$RUN" == "new view" ]
@@ -78,7 +89,6 @@ function triggerBuilds() {
             break
         fi
         RUN_JOB=${RUN}
-        BRANCH_ENCODED=`encode $BRANCH`
         BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
         RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
         echo "jenkins returned HTTP code : $RESPONSE"
@@ -128,7 +138,7 @@ function createView()
 
 function encode()
 {
-  echo $1 | sed -e 's|/|%2F|' 
+  echo $1 | sed -e 's|/|%252F|' 
 }
 
 BRANCHES=$( getAvailableBranches )
