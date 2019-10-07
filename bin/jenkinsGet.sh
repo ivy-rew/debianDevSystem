@@ -10,6 +10,9 @@ BRANCH=$3
 ARTIFACT=$4
 ARTIFACT_PATTERN=$5
 
+DATA_DIRECTORY=~/Downloads
+source .env
+
 function jenkinsGet (){
     SUCCESS_URL="http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild"
     JSON=$(curl -s "$SUCCESS_URL/api/json?pretty=true")
@@ -31,9 +34,9 @@ function jenkinsGet (){
         PRODUCT_DESCRIPTOR=$(basename "$BRANCH_DECODED")
     fi
 
-    UNPACKED="/mnt/data/axonIvyProducts/${ARTIFACT}_$REVISION-$PRODUCT_DESCRIPTOR"
+    UNPACKED="${DATA_DIRECTORY}/${ARTIFACT}_$REVISION-$PRODUCT_DESCRIPTOR"
     echo "Extracting to $UNPACKED"
     unzip -q "/tmp/$ZIP" -d "$UNPACKED"
-    $(nemo "$UNPACKED" & )
+    gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED"
 }
 
