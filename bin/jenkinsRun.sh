@@ -18,6 +18,8 @@ JENKINS=zugprojenkins
 URL="http://zugprojenkins/job/$JOB/"
 JENKINS_USER=`whoami`
 
+source .env
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # ensure dependent binaries exist
