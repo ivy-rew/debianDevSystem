@@ -10,7 +10,7 @@ BRANCH=$3
 ARTIFACT=$4
 ARTIFACT_PATTERN=$5
 
-DATA_DIRECTORY=/mnt/data/axonIvyProducts
+DATA_DIRECTORY=~/Downloads
 source .env
 
 function jenkinsGet (){
