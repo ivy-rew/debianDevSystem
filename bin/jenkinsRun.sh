@@ -70,7 +70,7 @@ function triggerBuilds() {
     JOBS=$( getAvailableTestJobs )
     select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
     do
-        BRANCH_ENCODED=`encode $BRANCH`
+        BRANCH_ENCODED=`encodeForDownload $BRANCH`
         if [ "$RUN" == "none" ]
         then
             break
@@ -139,6 +139,11 @@ function createView()
 }
 
 function encode()
+{
+  echo $1 | sed -e 's|/|%2F|' 
+}
+
+function encodeForDownload()
 {
   echo $1 | sed -e 's|/|%252F|' 
 }
