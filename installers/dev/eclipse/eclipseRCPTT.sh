@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=2.4.2
+version=2.4.3
 
 dlUrl=https://mirrors.dotsrc.org/eclipse//rcptt/release/$version/ide/rcptt.ide-$version-linux.gtk.x86_64.zip
 if [ ! -z "$1" ]
