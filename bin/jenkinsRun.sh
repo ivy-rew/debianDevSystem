@@ -17,10 +17,15 @@ fi
 JENKINS=zugprojenkins
 URL="http://zugprojenkins/job/$JOB/"
 JENKINS_USER=`whoami`
-
-source .env
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+ENV="$DIR/.env"
+if [ -f $ENV ]; then
+    source $ENV
+else
+    echo "'$ENV' file missing. Adapt it form '.env.template' in order to use all features of jenkins CLI"
+fi
+
 
 # ensure dependent binaries exist
 if ! [ -x "$(command -v curl)" ]; then

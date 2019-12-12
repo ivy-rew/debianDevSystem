@@ -11,7 +11,12 @@ ARTIFACT=$4
 ARTIFACT_PATTERN=$5
 
 DATA_DIRECTORY=~/Downloads
-source .env
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ENV="$DIR/.env"
+if [ -f $ENV ]; then
+    source $ENV
+fi
 
 function jenkinsGet (){
     SUCCESS_URL="http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild"
