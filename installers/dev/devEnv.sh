@@ -34,6 +34,3 @@ $DIR/eclipseRCP.sh
 $DIR/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
 
-# interactive:
-$DIR/oxygenXmlAuthor.sh
-
