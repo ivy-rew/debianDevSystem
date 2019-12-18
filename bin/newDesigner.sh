@@ -14,7 +14,7 @@ if [ ! -z "$2" ]
     JOB=$2
 fi
 
-JENKINS=zugprojenkins
+JENKINS="jenkins.ivyteam.io"
 ARTIFACT=designer
 ARTIFACT_PATTERN=AxonIvyDesigner.*_Linux_x64.zip
 

@@ -14,8 +14,8 @@ if [ ! -z "$3" ]
     JOB=$3
 fi
 
-JENKINS=zugprojenkins
-URL="http://zugprojenkins/job/$JOB/"
+JENKINS="jenkins.ivyteam.io"
+URL="https://${JENKINS}/job/$JOB/"
 JENKINS_USER=`whoami`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -51,7 +51,7 @@ function getAvailableBranches()
 
 function getAvailableTestJobs()
 {
-  JSON=`curl -s "http://$JENKINS/api/json?tree=jobs[name]"`
+  JSON=`curl -s "https://$JENKINS/api/json?tree=jobs[name]"`
   JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test' \
    | sed -e 's|%2F|/|' \
    | sed -e 's|"||g' `
@@ -72,7 +72,7 @@ function triggerBuilds() {
     fi
 
     # get XSS preventention token
-    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'http://zugprojenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'https://jenkins.ivyteam.io/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
 
     JOBS=$( getAvailableTestJobs )
     select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
@@ -98,13 +98,13 @@ function triggerBuilds() {
             break
         fi
         RUN_JOB=${RUN}
-        BUILD_URL="http://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
+        BUILD_URL="https://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
         RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
         echo "jenkins returned HTTP code : $RESPONSE"
         
         if [ "$RESPONSE" == 404 ] ; then
             # job may requires a manual rescan to expose our new branch
-            rescanBranches "http://$JENKINS/job/$RUN_JOB/"
+            rescanBranches "https://$JENKINS/job/$RUN_JOB/"
         fi
     done
 }

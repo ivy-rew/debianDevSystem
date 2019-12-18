@@ -14,7 +14,7 @@ if [ ! -z "$2" ]
     JOB=$2
 fi
 
-JENKINS=zugprojenkins
+JENKINS="jenkins.ivyteam.io"
 ARTIFACT=engine
 ARTIFACT_PATTERN=AxonIvyEngine[0-9\.]*_All_x64.zip
 

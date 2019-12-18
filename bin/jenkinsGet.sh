@@ -19,7 +19,7 @@ if [ -f $ENV ]; then
 fi
 
 function jenkinsGet (){
-    SUCCESS_URL="http://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild"
+    SUCCESS_URL="https://$JENKINS/job/$JOB/job/$BRANCH/lastSuccessfulBuild"
     JSON=$(curl -s "$SUCCESS_URL/api/json?pretty=true")
     REL_PATH=$(echo $JSON | \
         grep -o '"relativePath" : "[^"]*"' | \
