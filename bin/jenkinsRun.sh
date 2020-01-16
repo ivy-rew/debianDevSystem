@@ -88,16 +88,30 @@ function triggerBuilds() {
 
         JOB_URL="https://$JENKINS/job/${RUN}/job/${BRANCH_ENCODED}"
         RESPONSE=$( requestBuild ${JOB_URL} )
-        echo "[ ${RESPONSE} ] @ $JOB_URL"
+        echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
         
         if [ "$RESPONSE" == 404 ] ; then
             # job may requires a manual rescan to expose our new branch | isolate in sub bash to avoid conflicts!
             SCANNED=$( rescanBranches "https://$JENKINS/job/$RUN/" 3>&1 1>&2 2>&3 )
             # re-try
             RESPONSE=$( requestBuild ${JOB_URL} )
-            echo "[ ${RESPONSE} ] @ $JOB_URL"
+            echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
         fi
     done
+}
+
+function statusColor()
+{
+  STATUS=$1
+  if [[ "$STATUS" == "2"* ]] ; then #GREEN
+    echo "$(tput setaf 2)${STATUS}$(tput sgr0)"
+  elif [[ "$STATUS" == "4"* ]] ; then #RED
+    echo "$(tput setaf 1)${STATUS}$(tput sgr0)"
+  elif [[ "$STATUS" == "3"* ]] ; then #YELLOW
+    echo "$(tput setaf 3)${STATUS}$(tput sgr0)"
+  else
+    echo -e "$STATUS"
+  fi
 }
 
 function requestBuild()
@@ -121,7 +135,7 @@ function requestBuild()
   STATUS=$(curl --write-out %{http_code} --silent --output /dev/null -L -I -X POST \
     -u "$JENKINS_USER:$JENKINS_TOKEN" \
     "$RUN_URL/build?delay=0sec" -H "$CRUMB")
-  echo "$STATUS"
+  echo $STATUS
 }
 
 function rescanBranches()
@@ -140,7 +154,7 @@ function rescanBranches()
       sleep 1
     done
   else
-    echo "failed: Jenkins returned $HTTP_STATUS"
+    echo "failed: Jenkins returned $( statusColor $HTTP_STATUS )"
   fi
   printf "\n"
 }
