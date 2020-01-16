@@ -62,18 +62,6 @@ function triggerBuilds() {
     BRANCH=$1
     echo -e "triggering builds for ${GREEN}${BRANCH}${NC}"
 
-    if [ -z ${JENKINS_TOKEN+x} ]
-    then
-        echo "Jenkins API token not found as enviroment variable called 'JENKINS_TOKEN'. Therefore password for jenkins must be entered:"
-        echo -n "Enter JENKINS password for $JENKINS_USER:" 
-        echo -n ""
-        read -s JENKINS_TOKEN
-        echo ""
-    fi
-
-    # get XSS preventention token
-    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'https://jenkins.ivyteam.io/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
-
     JOBS=$( getAvailableTestJobs )
     select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
     do
@@ -97,16 +85,43 @@ function triggerBuilds() {
             createView $BRANCH
             break
         fi
-        RUN_JOB=${RUN}
-        BUILD_URL="https://$JENKINS/job/$RUN_JOB/job/$BRANCH_ENCODED/build?delay=0sec"
-        RESPONSE=`curl --write-out %{http_code} --silent --output /dev/null -I -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" "$BUILD_URL" -H "$CRUMB"`
-        echo "jenkins returned HTTP code : $RESPONSE"
+
+        JOB_URL="https://$JENKINS/job/${RUN}/job/${BRANCH_ENCODED}"
+        RESPONSE=$( requestBuild ${JOB_URL} )
+        echo "[ ${RESPONSE} ] @ $JOB_URL"
         
         if [ "$RESPONSE" == 404 ] ; then
-            # job may requires a manual rescan to expose our new branch
-            rescanBranches "https://$JENKINS/job/$RUN_JOB/"
+            # job may requires a manual rescan to expose our new branch | isolate in sub bash to avoid conflicts!
+            SCANNED=$( rescanBranches "https://$JENKINS/job/$RUN/" 3>&1 1>&2 2>&3 )
+            # re-try
+            RESPONSE=$( requestBuild ${JOB_URL} )
+            echo "[ ${RESPONSE} ] @ $JOB_URL"
         fi
     done
+}
+
+function requestBuild()
+{
+  RUN_URL=$1
+  if [ -z ${JENKINS_TOKEN+x} ]; then
+      echo "Jenkins API token not found as enviroment variable called 'JENKINS_TOKEN'. Therefore password for jenkins must be entered:"
+      echo -n "Enter JENKINS password for $JENKINS_USER:" 
+      echo -n ""
+      read -s JENKINS_TOKEN
+      echo ""
+      export JENKINS_TOKEN="$JENKINS_TOKEN" #re-use in this cli
+  fi
+
+  # get XSS preventention token
+  if [ -z ${CRUMB+x} ]; then
+    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'https://jenkins.ivyteam.io/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+    export CRUMB="$CRUMB" #re-use for follow up requests
+  fi
+
+  STATUS=$(curl --write-out %{http_code} --silent --output /dev/null -L -I -X POST \
+    -u "$JENKINS_USER:$JENKINS_TOKEN" \
+    "$RUN_URL/build?delay=0sec" -H "$CRUMB")
+  echo "$STATUS"
 }
 
 function rescanBranches()
@@ -127,6 +142,7 @@ function rescanBranches()
   else
     echo "failed: Jenkins returned $HTTP_STATUS"
   fi
+  printf "\n"
 }
 
 function createView()
