@@ -43,10 +43,10 @@ NC='\033[0m' # No Color
 function getAvailableBranches()
 {
   JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=`echo $JSON | jq '.jobs[].name' \
+  BRANCHES=$(echo $JSON | jq '.jobs[].name' \
    | sed -e 's|%2F|/|' \
-   | sed -e 's|"||g' `
-  echo -e $BRANCHES
+   | sed -e 's|"||g')
+  echo "$BRANCHES"
 }
 
 function getAvailableTestJobs()
@@ -155,10 +155,17 @@ function encodeForDownload()
   echo $1 | sed -e 's|/|%252F|' 
 }
 
+function noColor()
+{
+  echo -E $1 | sed -r "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g"
+}
+
 function chooseBranch()
 {
   BRANCHES_RAW=$( getAvailableBranches )
-  readarray -t BRANCHES <<< "$BRANCHES_RAW"
+  GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  BRANCHES_COLORED=$(grep -C 100 --color=always -E "${GIT_BRANCH}" <<< "${BRANCHES_RAW}")
+  readarray -t BRANCHES <<< "$BRANCHES_COLORED"
   OPTIONS=( '!re-scan' '!exit' ${BRANCHES[@]} )
 
   echo "SELECT branch of $URL"
@@ -173,7 +180,8 @@ function chooseBranch()
         echo 'Have a nice day! 👍'
         break
     else
-        triggerBuilds ${OPTION}
+        BRANCH=$(noColor "${OPTION}")
+        triggerBuilds ${BRANCH}
         break
     fi
   done
