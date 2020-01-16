@@ -155,19 +155,30 @@ function encodeForDownload()
   echo $1 | sed -e 's|/|%252F|' 
 }
 
-BRANCHES=$( getAvailableBranches )
+function chooseBranch()
+{
+  BRANCHES_RAW=$( getAvailableBranches )
+  readarray -t BRANCHES <<< "$BRANCHES_RAW"
+  OPTIONS=( '!re-scan' '!exit' ${BRANCHES[@]} )
 
-echo "SELECT branch of $URL"
-select BRANCH_SELECTED in 're-scan' $BRANCHES
-do
-    if [ "$BRANCH_SELECTED" == "re-scan" ]
-    then
+  echo "SELECT branch of $URL"
+  select OPTION in ${OPTIONS[@]}; do
+    if [ "$OPTION" == "!re-scan" ]; then
         echo 're-scanning [beta]'
         rescanBranches $URL
-        BRANCHES=$( getAvailableBranches )
-    else
-        triggerBuilds ${BRANCH_SELECTED}
+        chooseBranch
         break
     fi
-done
+    if [ "$OPTION" == "!exit" ]; then
+        echo 'Have a nice day! 👍'
+        break
+    else
+        triggerBuilds ${OPTION}
+        break
+    fi
+  done
+}
+
+chooseBranch
+
 
