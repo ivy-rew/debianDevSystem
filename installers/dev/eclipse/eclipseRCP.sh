@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=2019-06
+version=2019-12
 if [ ! -z "$1" ]
   then
     version=$1
