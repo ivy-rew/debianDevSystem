@@ -66,37 +66,23 @@ function triggerBuilds() {
     select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
     do
         BRANCH_ENCODED=`encodeForDownload $BRANCH`
-        if [ "$RUN" == "none" ]
-        then
+        if [ "$RUN" == "none" ] ; then
             break
         fi
-        if [ "$RUN" == "getDesigner" ]
-        then
+        if [ "$RUN" == "getDesigner" ] ; then
             $($DIR/newDesigner.sh "$BRANCH_ENCODED")
             break
         fi
-        if [ "$RUN" == "getEngine" ]
-        then
+        if [ "$RUN" == "getEngine" ] ; then
             $($DIR/newEngine.sh "$BRANCH_ENCODED")
             break
         fi
-        if [ "$RUN" == "new view" ]
-        then
+        if [ "$RUN" == "new view" ] ; then
             createView $BRANCH
             break
         fi
 
-        JOB_URL="https://$JENKINS/job/${RUN}/job/${BRANCH_ENCODED}"
-        RESPONSE=$( requestBuild ${JOB_URL} )
-        echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
-        
-        if [ "$RESPONSE" == 404 ] ; then
-            # job may requires a manual rescan to expose our new branch | isolate in sub bash to avoid conflicts!
-            SCANNED=$( rescanBranches "https://$JENKINS/job/$RUN/" 3>&1 1>&2 2>&3 )
-            # re-try
-            RESPONSE=$( requestBuild ${JOB_URL} )
-            echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
-        fi
+        triggerBuild $RUN $BRANCH_ENCODED
     done
 }
 
@@ -111,6 +97,24 @@ function statusColor()
     echo "$(tput setaf 3)${STATUS}$(tput sgr0)"
   else
     echo -e "$STATUS"
+  fi
+}
+
+function triggerBuild()
+{
+  RUN_JOB=$1
+  BRANCH=$2
+
+  JOB_URL="https://$JENKINS/job/${RUN_JOB}/job/${BRANCH}"
+  RESPONSE=$( requestBuild ${JOB_URL} )
+  echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
+  
+  if [ "$RESPONSE" == 404 ] ; then
+      # job may requires a manual rescan to expose our new branch | isolate in sub bash to avoid conflicts!
+      SCANNED=$( rescanBranches "https://$JENKINS/job/$RUN_JOB/" 3>&1 1>&2 2>&3 )
+      # re-try
+      RESPONSE=$( requestBuild ${JOB_URL} )
+      echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
   fi
 }
 
