@@ -40,7 +40,9 @@ function getAvailableBranches()
 function getAvailableTestJobs()
 {
   JSON=`curl -s "https://$JENKINS/api/json?tree=jobs[name]"`
-  JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test' \
+  JOBS=`echo $JSON \
+   | grep -o -E '"name":"([^"]*)' | sed -e 's|"name":"||g' \
+   | grep 'ivy-core_test' \
    | sed -e 's|%2F|/|' \
    | sed -e 's|"||g' `
   echo $JOBS
