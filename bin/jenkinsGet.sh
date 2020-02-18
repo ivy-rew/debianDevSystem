@@ -42,6 +42,11 @@ function jenkinsGet (){
     UNPACKED="${DATA_DIRECTORY}/${ARTIFACT}_$REVISION-$PRODUCT_DESCRIPTOR"
     echo "Extracting to $UNPACKED"
     unzip -q "/tmp/$ZIP" -d "$UNPACKED"
-    gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED"
+
+    if [ -x "$(command -v gtk-launch )" ]; then
+      gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED" & #DEBIAN
+    elif [ -x "$(command -v open )" ]; then
+      open "$UNPACKED" & # Mac OSX
+    fi
 }
 
