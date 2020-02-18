@@ -29,7 +29,12 @@ function jenkinsGet (){
     echo "found revision $REVISION"
 
     DL_URL=$SUCCESS_URL/artifact/$REL_PATH
-    wget "$DL_URL" -P /tmp
+    
+    if [ -x "$(command -v wget )" ]; then
+      wget "$DL_URL" -P /tmp
+    elif [ -x "$(command -v curl )" ]; then
+      curl "$DL_URL" -o "/tmp/$ZIP"
+    fi
     echo "Downloaded $ZIP. Enter a description for this $ARTIFACT"
     if [ "$BRANCH" == "master" ]
       then
@@ -42,6 +47,11 @@ function jenkinsGet (){
     UNPACKED="${DATA_DIRECTORY}/${ARTIFACT}_$REVISION-$PRODUCT_DESCRIPTOR"
     echo "Extracting to $UNPACKED"
     unzip -q "/tmp/$ZIP" -d "$UNPACKED"
-    gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED"
+
+    if [ -x "$(command -v gtk-launch )" ]; then
+      gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED" & #DEBIAN
+    elif [ -x "$(command -v open )" ]; then
+      open "$UNPACKED" & # Mac OSX
+    fi
 }
 

@@ -25,14 +25,13 @@ fi
 if ! [ -x "$(command -v curl)" ]; then
   sudo apt install -y curl
 fi
-if ! [ -x "$(command -v jq)" ]; then
-  sudo apt install -y jq
-fi
 
 function getAvailableBranches()
 {
   JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=$(echo $JSON | jq '.jobs[].name' \
+  BRANCHES=$(echo $JSON \
+   | grep -o -E '"name":"([^"]*)' \
+   | sed -e 's|"name":"||g' \
    | sed -e 's|%2F|/|' \
    | sed -e 's|"||g')
   echo "$BRANCHES"
@@ -41,7 +40,9 @@ function getAvailableBranches()
 function getAvailableTestJobs()
 {
   JSON=`curl -s "https://$JENKINS/api/json?tree=jobs[name]"`
-  JOBS=`echo $JSON | jq '.jobs[].name' | grep 'ivy-core_test' \
+  JOBS=`echo $JSON \
+   | grep -o -E '"name":"([^"]*)' | sed -e 's|"name":"||g' \
+   | grep 'ivy-core_test' \
    | sed -e 's|%2F|/|' \
    | sed -e 's|"||g' `
   echo $JOBS
