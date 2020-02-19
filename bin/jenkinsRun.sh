@@ -15,19 +15,19 @@ function triggerBuilds() {
             break
         fi
         if [ "$RUN" == "getDesigner" ] ; then
-            $($DIR/newDesigner.sh "$BRANCH_ENCODED")
+            echo $($DIR/newDesigner.sh "$BRANCH_ENCODED")
             break
         fi
         if [ "$RUN" == "getEngine" ] ; then
-            $($DIR/newEngine.sh "$BRANCH_ENCODED")
+            echo $($DIR/newEngine.sh "$BRANCH_ENCODED")
             break
         fi
         if [ "$RUN" == "new view" ] ; then
-            createView $BRANCH
+            echo "$(createView $BRANCH)"
             break
         fi
 
-        triggerBuild $RUN $BRANCH_ENCODED
+        echo $(triggerBuild $RUN $BRANCH_ENCODED)
     done
 }
 
