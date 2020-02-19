@@ -16,6 +16,6 @@ fi
 
 JENKINS="jenkins.ivyteam.io"
 ARTIFACT=designer
-ARTIFACT_PATTERN=AxonIvyDesigner.*_Linux_x64.zip
+ARTIFACT_PATTERN=${DESIGNER_PATTERN}
 
 jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
