@@ -94,7 +94,9 @@ function requestBuild()
 
   # get XSS preventention token
   if [ -z ${CRUMB+x} ]; then
-    CRUMB=`wget -q --auth-no-challenge --user $JENKINS_USER --password $JENKINS_TOKEN --output-document - 'https://jenkins.ivyteam.io/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'`
+    ISSUER_URI='https://jenkins.ivyteam.io/crumbIssuer/api/xml'
+    CRUMB=$(curl --silent --basic -u "${JENKINS_USER}:${JENKINS_TOKEN}" "$ISSUER_URI") \
+      | grep -o -E '"crumb":"[^"]*' | sed -e 's|"crumb":"||'
     export CRUMB="$CRUMB" #re-use for follow up requests
   fi
 
