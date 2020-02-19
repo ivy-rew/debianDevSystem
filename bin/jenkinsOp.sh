@@ -133,12 +133,12 @@ function createView()
   BRANCH=$1
   BRANCH_ENCODED=`encode $BRANCH`
   MYVIEWS_URL="https://$JENKINS/user/${JENKINS_USER}/my-views"
-  curl -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
+  curl -s -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
   CONFIG_URL="${MYVIEWS_URL}/view/${BRANCH_ENCODED}/config.xml"
   curl -k -s -X GET "${CONFIG_URL}" -o viewConf.xml
   ISSUE_REGEX=$( echo $BRANCH | sed -e 's|.*/|\.*|')
   sed -e "s|<recurse>false</recurse>|<includeRegex>${ISSUE_REGEX}</includeRegex><recurse>true></recurse>|" viewConf.xml > viewConf2.xml
-  curl -k -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
+  curl -k -s -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
   rm viewConf*.xml
   echo "View created: ${MYVIEWS_URL}/view/${BRANCH_ENCODED}/"
 }
