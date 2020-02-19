@@ -29,23 +29,24 @@ fi
 function getAvailableBranches()
 {
   JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=$(echo $JSON \
-   | grep -o -E '"name":"([^"]*)' \
-   | sed -e 's|"name":"||g' \
-   | sed -e 's|%2F|/|' \
-   | sed -e 's|"||g')
+  BRANCHES=$(jsonField "$JSON" "name" \
+   | sed -e 's|%2F|/|' )
   echo "$BRANCHES"
 }
 
 function getAvailableTestJobs()
 {
   JSON=`curl -s "https://$JENKINS/api/json?tree=jobs[name]"`
-  JOBS=`echo $JSON \
-   | grep -o -E '"name":"([^"]*)' | sed -e 's|"name":"||g' \
+  JOBS=$(jsonField "$JSON" "name" \
    | grep 'ivy-core_test' \
-   | sed -e 's|%2F|/|' \
-   | sed -e 's|"||g' `
+   | sed -e 's|%2F|/|' )
   echo $JOBS
+}
+
+function jsonField()
+{
+  FIELD=$2
+  echo $1 | grep -o -E "\"${FIELD}\":\"([^\"]*)" | sed -e "s|\"${FIELD}\":\"||g"
 }
 
 function statusColor()
