@@ -52,6 +52,9 @@ function jenkinsGet (){
       gtk-launch "$(xdg-mime query default inode/directory)" "$UNPACKED" & #DEBIAN
     elif [ -x "$(command -v open )" ]; then
       open "$UNPACKED" & # Mac OSX
+    elif [ -x "$(command -v explorer )" ]; then
+      WINDIR=$(echo $UNPACKED | sed 's|/c|C:|' | sed 's|/|\\|g')
+      explorer "$WINDIR" & # Good old windows
     fi
 }
 
