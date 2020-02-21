@@ -11,10 +11,15 @@ cd macOS-Simple-KVM
 
 # virtualize
 sudo apt install qemu-utils 
-DISK='/mnt/data/blob/kvm/macOScatalina.qcow2'
+if [ ! -d '/mnt/kvm' ]; then
+    sudo mkdir /mnt/kvm
+fi
+DISK='/mnt/kvm/macOScatalina.qcow2'
 # at least 24 G are required to install catalina > work with a second disk for your data to ease migration!
 qemu-img create -f qcow2 $DISK 30G
-printf "    -drive id=SystemDisk,if=none,file=$DISK \ \n    -device ide-hd,bus=sata.4,drive=SystemDisk \ \n" >> basic.sh
+printf "    -drive id=SystemDisk,if=none,file=${DISK} \\" >> basic.sh
+printf "\n" >> basic.sh
+printf "    -device ide-hd,bus=sata.4,drive=SystemDisk \\" >> basic.sh
 
 # as in the tutorial
 sudo apt install qemu-system 
