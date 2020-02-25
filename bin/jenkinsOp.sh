@@ -50,7 +50,17 @@ function getHealth()
   API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json"
   JSON=$(curl -s "${API_URI}")
   COLOR=$(jsonField "${JSON}" "color")
-  echo $COLOR
+  if [ -z "$COLOR" ]; then
+    COLOR="❔"
+  fi
+  EMO=$(echo $COLOR \
+   | sed 's|yellow|⚠️|' \
+   | sed 's|blue|🆗|' \
+   | sed 's|red|💔|' \
+   | sed 's|_anime|🏃🏃🏃|' \
+   | sed 's|notbuilt|💤|'
+   )
+  echo $EMO
 }
 
 function jsonField()

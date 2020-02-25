@@ -53,7 +53,7 @@ function jobStatus()
     declare -a JBS=("${!1}")
     local jobState=()
     for JB in ${JBS[*]}; do
-        jobState+=("$JB@$(getHealth ${JB} ${BRANCH})")
+        jobState+=("$JB@$(getHealth ${JB} ${BRANCH_ENCODED})")
     done
     echo ${jobState[@]}
 }
