@@ -7,12 +7,24 @@ function triggerBuilds() {
     BRANCH=$1
     echo -e "triggering builds for ${GREEN}${BRANCH}${NC}"
 
-    JOBS=$( getAvailableTestJobs )
-    select RUN in none getDesigner getEngine 'ivy-core_ci' 'ivy-core_product' $JOBS 'new view'
+    local JOBS=('ivy-core_ci' 'ivy-core_product' $(getAvailableTestJobs) )
+    
+    if [ "$HEALTH" == "true" ] ; then
+        SEL_JOBS=$(jobStatus JOBS[@] )
+    else
+        SEL_JOBS=${JOBS[@]}
+    fi
+    HEALTH="false"
+
+    select RUN in none 'health' getDesigner getEngine ${SEL_JOBS[@]} 'new view'
     do
         BRANCH_ENCODED=`encodeForDownload $BRANCH`
         if [ "$RUN" == "none" ] ; then
             break
+        fi
+        if [ "$RUN" == "health" ] ; then
+            HEALTH="true"
+            break;
         fi
         if [ "$RUN" == "getDesigner" ] ; then
             echo $($DIR/newDesigner.sh "$BRANCH_ENCODED")
@@ -27,8 +39,23 @@ function triggerBuilds() {
             break
         fi
 
-        echo $(triggerBuild $RUN $BRANCH_ENCODED)
+        JOB_RAW=$(sed 's|@.*||' <<< $RUN )
+        echo $(triggerBuild ${JOB_RAW} $BRANCH_ENCODED)
     done
+    
+    if [ "$HEALTH" == "true" ] ; then
+        triggerBuilds $1
+    fi
+}
+
+function jobStatus()
+{
+    declare -a JBS=("${!1}")
+    local jobState=()
+    for JB in ${JBS[*]}; do
+        jobState+=("$JB@$(getHealth ${JB} ${BRANCH})")
+    done
+    echo ${jobState[@]}
 }
 
 function noColor()

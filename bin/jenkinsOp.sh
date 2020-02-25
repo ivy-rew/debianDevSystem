@@ -43,6 +43,16 @@ function getAvailableTestJobs()
   echo $JOBS
 }
 
+function getHealth()
+{
+  JOB="$1"
+  BRANCH="$2"
+  API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json"
+  JSON=$(curl -s "${API_URI}")
+  COLOR=$(jsonField "${JSON}" "color")
+  echo $COLOR
+}
+
 function jsonField()
 {
   FIELD=$2
