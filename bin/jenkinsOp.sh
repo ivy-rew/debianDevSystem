@@ -47,7 +47,7 @@ function getHealth()
 {
   JOB="$1"
   BRANCH="$2"
-  API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json"
+  API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json?tree=color"
   JSON=$(curl -s "${API_URI}")
   COLOR=$(jsonField "${JSON}" "color")
   if [ -z "$COLOR" ]; then
