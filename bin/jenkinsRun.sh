@@ -39,7 +39,7 @@ function triggerBuilds() {
             break
         fi
 
-        JOB_RAW=$(sed 's|@.*||' <<< $RUN )
+        JOB_RAW=$(sed 's|\.\.\..*||' <<< $RUN )
         echo $(triggerBuild ${JOB_RAW} $BRANCH_ENCODED)
     done
     
@@ -53,7 +53,7 @@ function jobStatus()
     declare -a JBS=("${!1}")
     local jobState=()
     for JB in ${JBS[*]}; do
-        jobState+=("$JB@$(getHealth ${JB} ${BRANCH_ENCODED})")
+        jobState+=("$JB...$(getHealth ${JB} ${BRANCH_ENCODED})")
     done
     echo ${jobState[@]}
 }

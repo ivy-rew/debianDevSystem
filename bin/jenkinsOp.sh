@@ -57,6 +57,7 @@ function getHealth()
    | sed 's|yellow|⚠️|' \
    | sed 's|blue|🆗|' \
    | sed 's|red|💔|' \
+   | sed 's|disabled|🔧|' \
    | sed 's|_anime|🏃🏃🏃|' \
    | sed 's|notbuilt|💤|'
    )
