@@ -92,6 +92,7 @@ function chooseBranch()
   done
 }
 
-chooseBranch
-
+if [[ "$1" != "test" ]]; then
+  chooseBranch
+fi
 
