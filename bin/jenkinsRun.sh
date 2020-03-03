@@ -69,7 +69,7 @@ function chooseBranch()
   GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   BRANCHES_COLORED=$(grep -C 100 --color=always -E "${GIT_BRANCH}" <<< "${BRANCHES_RAW}")
   if [[ -z "$BRANCHES_COLORED" ]]; then
-    BRANCHES_COLORED="${BRANCHES_RAW}" #all without highlight: local 'only' branch.
+    BRANCHES_COLORED="${BRANCHES_RAW[@]}" #all without highlight: local 'only' branch.
   fi
   readarray -t BRANCHES <<< "$BRANCHES_COLORED"
   OPTIONS=( '!re-scan' '!exit' ${BRANCHES[@]} )
@@ -93,6 +93,7 @@ function chooseBranch()
   done
 }
 
-chooseBranch
-
+if [[ "$1" != "test" ]]; then
+  chooseBranch
+fi
 

@@ -9,7 +9,7 @@ if [ ! -z "$3" ]
 fi
 
 JENKINS="jenkins.ivyteam.io"
-URL="https://${JENKINS}/job/$JOB/"
+URL="https://${JENKINS}/job/${JOB}/"
 JENKINS_USER=`whoami`
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -28,15 +28,15 @@ fi
 
 function getAvailableBranches()
 {
-  JSON=`curl -s "$URL/api/json?tree=jobs[name]"`
-  BRANCHES=$(jsonField "$JSON" "name" \
-   | sed -e 's|%2F|/|' )
-  echo "$BRANCHES"
+  JSON=`curl -s "${URL}/api/json?tree=jobs\[name\]"`
+  BR=`jsonField "${JSON}" "name" \
+   | sed -e 's|%2F|/|' `
+  echo "${BR}"
 }
 
 function getAvailableTestJobs()
 {
-  JSON=`curl -s "https://$JENKINS/api/json?tree=jobs[name]"`
+  JSON=`curl -s "https://$JENKINS/api/json?tree=jobs\[name\]"`
   JOBS=$(jsonField "$JSON" "name" \
    | grep 'ivy-core_test' \
    | sed -e 's|%2F|/|' )
