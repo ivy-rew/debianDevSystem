@@ -28,8 +28,7 @@ case "${unameOut}" in
 esac
 if [ "${machine}" == Mac ] 
   then
-    sed -i 's/Linux/MacOSX-BETA/g' .env.template
-    cp .env.template .env
+    sed 's/Linux/MacOSX-BETA/g' .env.template > .env
 fi
 
 jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
