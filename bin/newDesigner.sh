@@ -19,3 +19,17 @@ ARTIFACT=designer
 ARTIFACT_PATTERN=${DESIGNER_PATTERN}
 
 jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
+
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+if [ "${machine}" == Mac ] 
+  then
+    sed 's/Linux/MacOSX-BETA/g' .env.template
+    cp .env.template .env
+fi
