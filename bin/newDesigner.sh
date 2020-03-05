@@ -18,8 +18,6 @@ JENKINS="jenkins.ivyteam.io"
 ARTIFACT=designer
 ARTIFACT_PATTERN=${DESIGNER_PATTERN}
 
-jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
-
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
@@ -33,3 +31,5 @@ if [ "${machine}" == Mac ]
     sed 's/Linux/MacOSX-BETA/g' .env.template
     cp .env.template .env
 fi
+
+jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
