@@ -16,8 +16,7 @@ brew install htop
 brew cask install firefox
 
 # jdk 11
-brew tap AdoptOpenJDK/openjdk
-brew cask install adoptopenjdk11
+brew cask install homebrew/cask-versions/java11
 
 # maven
 brew install mvnvm

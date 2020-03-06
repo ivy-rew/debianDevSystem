@@ -14,21 +14,19 @@ if [ ! -z "$2" ]
     JOB=$2
 fi
 
-JENKINS="jenkins.ivyteam.io"
-ARTIFACT=designer
-ARTIFACT_PATTERN=${DESIGNER_PATTERN}
-
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
+    Darwin*)    machine=MacOSX-BETA;;
 esac
-if [ "${machine}" == Mac ] 
+if ! [ -z $machine ]
   then
-    sed 's/Linux/MacOSX-BETA/g' .env.template > .env
+    echo "setting designer download to ${machine}"
+    sed "s/Linux/${machine}/g" .env.template > .env
 fi
+
+JENKINS="jenkins.ivyteam.io"
+ARTIFACT=designer
+ARTIFACT_PATTERN=${DESIGNER_PATTERN}
 
 jenkinsGet $JENKINS $JOB $BRANCH $ARTIFACT $ARTIFACT_PATTERN
