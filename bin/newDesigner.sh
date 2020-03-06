@@ -14,6 +14,17 @@ if [ ! -z "$2" ]
     JOB=$2
 fi
 
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=MacOSX-BETA;;
+esac
+if ! [ -z $machine ]
+  then
+    echo "setting designer download to ${machine}"
+    sed "s/Linux/${machine}/g" .env.template > .env
+fi
+
 JENKINS="jenkins.ivyteam.io"
 ARTIFACT=designer
 ARTIFACT_PATTERN=${DESIGNER_PATTERN}
