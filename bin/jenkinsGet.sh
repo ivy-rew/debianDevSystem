@@ -36,7 +36,7 @@ jenkinsGet (){
       grep -o '"relativePath" : "[^"]*"' | \
       grep -o "[^\"]*${ARTIFACT_PATTERN}")
   ZIP=$(basename "$REL_PATH")
-  REVISION=$(echo $ZIP | grep -oP '[0-9]{10}')
+  REVISION=$(echo $ZIP | grep -o -E '[0-9]{10}')
   echo "found revision $REVISION"
 
   DL_URL=$SUCCESS_URL/artifact/$REL_PATH
