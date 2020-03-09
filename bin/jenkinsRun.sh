@@ -5,13 +5,14 @@ source "$DIR/jenkinsOp.sh"
 
 function triggerBuilds() {
     BRANCH=$1
-    echo -e "triggering builds for ${GREEN}${BRANCH}${NC}"
-
     local JOBS=('ivy-core_ci' 'ivy-core_product' $(getAvailableTestJobs) )
     
+    COLOR_BRANCH=${C_GREEN}${BRANCH}${C_OFF}
     if [ "$HEALTH" == "true" ] ; then
+        echo -e "getting health of ${COLOR_BRANCH}"
         SEL_JOBS=$(jobStatus JOBS[@] )
     else
+        echo -e "triggering builds for ${COLOR_BRANCH}"
         SEL_JOBS=${JOBS[@]}
     fi
     HEALTH="false"
@@ -63,6 +64,20 @@ function noColor()
   echo -E $1 | sed -E "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g"
 }
 
+function goodbye(){
+  printf "\nHave a nice day! 👍"
+  inspire
+}
+
+function inspire(){
+  JSON=$(curl -sS https://thatsthespir.it/api)
+  QUOTE=$(jsonField "${JSON}" "quote")
+  AUTHOR=$(jsonField "${JSON}" "author")
+  LINK=$(jsonField "${JSON}" "id" )
+  printf "\n\n$(tput bold setaf 4)${QUOTE}${C_OFF}
+$(tput setaf 5)${AUTHOR} $(tput setaf 6)https://thatsthespir.it/${LINK}${C_OFF}"
+}
+
 function chooseBranch()
 {
   BRANCHES_RAW=$( getAvailableBranches )
@@ -82,7 +97,6 @@ function chooseBranch()
         break
     fi
     if [ "$OPTION" == "!exit" ]; then
-        echo 'Have a nice day! 👍'
         break
     else
         BRANCH=$(noColor "${OPTION}")
@@ -93,6 +107,7 @@ function chooseBranch()
 }
 
 if [[ "$1" != "test" ]]; then
+  trap goodbye EXIT
   chooseBranch
 fi
 

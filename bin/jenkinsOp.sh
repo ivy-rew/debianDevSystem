@@ -11,11 +11,11 @@ fi
 JENKINS="jenkins.ivyteam.io"
 URL="https://${JENKINS}/job/${JOB}/"
 JENKINS_USER=`whoami`
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 
 ENV="$DIR/.env"
 if [ -f $ENV ]; then
-    source $ENV
+    . $ENV
 else
     echo "'$ENV' file missing. Adapt it form '.env.template' in order to use all features of jenkins CLI"
 fi
@@ -26,34 +26,39 @@ if ! [ -x "$(command -v curl)" ]; then
   sudo apt install -y curl
 fi
 
-function getAvailableBranches()
+getAvailableBranches()
 {
-  JSON=`curl -s "${URL}/api/json?tree=jobs\[name\]"`
-  BR=`jsonField "${JSON}" "name" \
-   | sed -e 's|%2F|/|' `
-  echo "${BR}"
+  local JSON=$(curl -sS "${URL}/api/json?tree=jobs\[name\]")
+  local BRANCHES="$(jsonField "${JSON}" "name" \
+   | sed -e 's|%2F|/|' )"
+  echo ${BRANCHES}
 }
 
-function getAvailableTestJobs()
+getAvailableTestJobs()
 {
-  JSON=`curl -s "https://$JENKINS/api/json?tree=jobs\[name\]"`
-  JOBS=$(jsonField "$JSON" "name" \
+  local JSON=$(curl -sS "https://$JENKINS/api/json?tree=jobs\[name\]")
+  local JOBS="$(jsonField "$JSON" "name" \
    | grep 'ivy-core_test' \
-   | sed -e 's|%2F|/|' )
-  echo $JOBS
+   | sed -e 's|%2F|/|' )"
+  echo ${JOBS}
 }
 
-function getHealth()
+getHealth()
 {
   JOB="$1"
   BRANCH="$2"
   API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json?tree=color"
-  JSON=$(curl -s "${API_URI}")
+  JSON=$(curl -sS "${API_URI}")
   COLOR=$(jsonField "${JSON}" "color")
+  colorToEmo $COLOR
+}
+
+colorToEmo(){
+  local COLOR=$1
   if [ -z "$COLOR" ]; then
     COLOR="❔"
   fi
-  EMO=$(echo $COLOR \
+  local EMO=$(echo $COLOR \
    | sed 's|yellow|⚠️|' \
    | sed 's|blue|🆗|' \
    | sed 's|red|💔|' \
@@ -64,27 +69,31 @@ function getHealth()
   echo $EMO
 }
 
-function jsonField()
+jsonField()
 {
-  FIELD=$2
+  local FIELD=$2
   echo $1 | grep -o -E "\"${FIELD}\":\"([^\"]*)" | sed -e "s|\"${FIELD}\":\"||g"
 }
 
-function statusColor()
+C_GREEN="$(tput setaf 2)"
+C_RED="$(tput setaf 1)"
+C_YELLOW="$(tput setaf 3)"
+C_OFF="$(tput sgr0)"
+statusColor()
 {
-  STATUS=$1
-  if [[ "$STATUS" == "2"* ]] ; then #GREEN
-    echo "$(tput setaf 2)${STATUS}$(tput sgr0)"
-  elif [[ "$STATUS" == "4"* ]] ; then #RED
-    echo "$(tput setaf 1)${STATUS}$(tput sgr0)"
-  elif [[ "$STATUS" == "3"* ]] ; then #YELLOW
-    echo "$(tput setaf 3)${STATUS}$(tput sgr0)"
+  local STATUS=$1
+  if [[ "$STATUS" == "2"* ]] ; then
+    echo "${C_GREEN}${STATUS}${C_OFF}"
+  elif [[ "$STATUS" == "4"* ]] ; then
+    echo "${C_RED}${STATUS}${C_OFF}"
+  elif [[ "$STATUS" == "3"* ]] ; then
+    echo "${C_YELLOW}${STATUS}${C_OFF}"
   else
     echo -e "$STATUS"
   fi
 }
 
-function triggerBuild()
+triggerBuild()
 {
   RUN_JOB=$1
   BRANCH=$2
@@ -102,7 +111,7 @@ function triggerBuild()
   fi
 }
 
-function requestBuild()
+requestBuild()
 {
   RUN_URL=$1
   if [ -z ${JENKINS_TOKEN+x} ]; then
@@ -117,7 +126,7 @@ function requestBuild()
   # get XSS preventention token
   if [ -z ${CRUMB+x} ]; then
     ISSUER_URI="https://${JENKINS}/crumbIssuer/api/xml"
-    CRUMB=$(curl --silent --basic -u "${JENKINS_USER}:${JENKINS_TOKEN}" "$ISSUER_URI") \
+    CRUMB=$(curl -sS --basic -u "${JENKINS_USER}:${JENKINS_TOKEN}" "$ISSUER_URI") \
       | grep -o -E '"crumb":"[^"]*' | sed -e 's|"crumb":"||'
     export CRUMB="$CRUMB" #re-use for follow up requests
   fi
@@ -128,7 +137,7 @@ function requestBuild()
   echo $STATUS
 }
 
-function rescanBranches()
+rescanBranches()
 {
   JOB_URL=$1
   ACTION="build?delay=0"
@@ -149,28 +158,28 @@ function rescanBranches()
   printf "\n"
 }
 
-function createView()
+createView()
 {
   # prepare a simple view: listing all jobs of my feature branch
   BRANCH=$1
   BRANCH_ENCODED=`encode $BRANCH`
   MYVIEWS_URL="https://$JENKINS/user/${JENKINS_USER}/my-views"
-  curl -s -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
+  curl -sS -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
   CONFIG_URL="${MYVIEWS_URL}/view/${BRANCH_ENCODED}/config.xml"
-  curl -k -s -X GET "${CONFIG_URL}" -o viewConf.xml
+  curl -k -sS -X GET "${CONFIG_URL}" -o viewConf.xml
   ISSUE_REGEX=$( echo $BRANCH | sed -e 's|.*/|\.*|')
   sed -e "s|<recurse>false</recurse>|<includeRegex>${ISSUE_REGEX}</includeRegex><recurse>true></recurse>|" viewConf.xml > viewConf2.xml
-  curl -k -s -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
+  curl -k -sS -X POST "${CONFIG_URL}" -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" -H "Content-Type:text/xml" --data-binary "@viewConf2.xml"
   rm viewConf*.xml
   echo "View created: ${MYVIEWS_URL}/view/${BRANCH_ENCODED}/"
 }
 
-function encode()
+encode()
 {
   echo $1 | sed -e 's|/|%2F|' 
 }
 
-function encodeForDownload()
+encodeForDownload()
 {
   echo $1 | sed -e 's|/|%252F|' 
 }
