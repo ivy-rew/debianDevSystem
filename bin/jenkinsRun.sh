@@ -66,6 +66,16 @@ function noColor()
 
 function goodbye(){
   printf "\nHave a nice day! 👍"
+  inspire
+}
+
+function inspire(){
+  JSON=$(curl -sS https://thatsthespir.it/api)
+  QUOTE=$(jsonField "${JSON}" "quote")
+  AUTHOR=$(jsonField "${JSON}" "author")
+  LINK=$(jsonField "${JSON}" "id" )
+  printf "\n\n$(tput bold setaf 4)${QUOTE}${C_OFF}
+$(tput setaf 5)${AUTHOR} $(tput setaf 6)https://thatsthespir.it/${LINK}${C_OFF}"
 }
 
 function chooseBranch()
