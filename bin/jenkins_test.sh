@@ -1,7 +1,7 @@
 #!/bin/bash
   
 oneTimeSetUp(){
-  . ../jenkinsOp.sh
+  . ./jenkinsOp.sh
 }
 
 testParseJson(){
