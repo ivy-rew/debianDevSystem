@@ -5,13 +5,14 @@ source "$DIR/jenkinsOp.sh"
 
 function triggerBuilds() {
     BRANCH=$1
-    echo -e "triggering builds for ${GREEN}${BRANCH}${NC}"
-
     local JOBS=('ivy-core_ci' 'ivy-core_product' $(getAvailableTestJobs) )
     
+    COLOR_BRANCH=${C_GREEN}${BRANCH}${C_OFF}
     if [ "$HEALTH" == "true" ] ; then
+        echo -e "getting health of ${COLOR_BRANCH}"
         SEL_JOBS=$(jobStatus JOBS[@] )
     else
+        echo -e "triggering builds for ${COLOR_BRANCH}"
         SEL_JOBS=${JOBS[@]}
     fi
     HEALTH="false"
