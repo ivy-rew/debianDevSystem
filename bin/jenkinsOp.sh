@@ -11,11 +11,11 @@ fi
 JENKINS="jenkins.ivyteam.io"
 URL="https://${JENKINS}/job/${JOB}/"
 JENKINS_USER=`whoami`
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 
 ENV="$DIR/.env"
 if [ -f $ENV ]; then
-    source $ENV
+    . $ENV
 else
     echo "'$ENV' file missing. Adapt it form '.env.template' in order to use all features of jenkins CLI"
 fi
@@ -26,7 +26,7 @@ if ! [ -x "$(command -v curl)" ]; then
   sudo apt install -y curl
 fi
 
-function getAvailableBranches()
+getAvailableBranches()
 {
   JSON=`curl -s "${URL}/api/json?tree=jobs\[name\]"`
   BR=`jsonField "${JSON}" "name" \
@@ -34,7 +34,7 @@ function getAvailableBranches()
   echo "${BR}"
 }
 
-function getAvailableTestJobs()
+getAvailableTestJobs()
 {
   JSON=`curl -s "https://$JENKINS/api/json?tree=jobs\[name\]"`
   JOBS=$(jsonField "$JSON" "name" \
@@ -43,7 +43,7 @@ function getAvailableTestJobs()
   echo $JOBS
 }
 
-function getHealth()
+getHealth()
 {
   JOB="$1"
   BRANCH="$2"
@@ -64,13 +64,13 @@ function getHealth()
   echo $EMO
 }
 
-function jsonField()
+jsonField()
 {
-  FIELD=$2
+  local FIELD=$2
   echo $1 | grep -o -E "\"${FIELD}\":\"([^\"]*)" | sed -e "s|\"${FIELD}\":\"||g"
 }
 
-function statusColor()
+statusColor()
 {
   STATUS=$1
   if [[ "$STATUS" == "2"* ]] ; then #GREEN
@@ -84,7 +84,7 @@ function statusColor()
   fi
 }
 
-function triggerBuild()
+triggerBuild()
 {
   RUN_JOB=$1
   BRANCH=$2
@@ -102,7 +102,7 @@ function triggerBuild()
   fi
 }
 
-function requestBuild()
+requestBuild()
 {
   RUN_URL=$1
   if [ -z ${JENKINS_TOKEN+x} ]; then
@@ -128,7 +128,7 @@ function requestBuild()
   echo $STATUS
 }
 
-function rescanBranches()
+rescanBranches()
 {
   JOB_URL=$1
   ACTION="build?delay=0"
@@ -149,7 +149,7 @@ function rescanBranches()
   printf "\n"
 }
 
-function createView()
+createView()
 {
   # prepare a simple view: listing all jobs of my feature branch
   BRANCH=$1
@@ -165,12 +165,12 @@ function createView()
   echo "View created: ${MYVIEWS_URL}/view/${BRANCH_ENCODED}/"
 }
 
-function encode()
+encode()
 {
   echo $1 | sed -e 's|/|%2F|' 
 }
 
-function encodeForDownload()
+encodeForDownload()
 {
   echo $1 | sed -e 's|/|%252F|' 
 }
