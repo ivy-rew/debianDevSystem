@@ -29,7 +29,7 @@ setup(){
 
 @test "health emoji" {
   state=$(getHealth "ivy-core_ci" "master")
-  [ "$state" == 🆗 ]
+  [[ "$state" == 🆗* ]]
 }
 
 @test "color emo" {
