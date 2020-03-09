@@ -1,22 +1,22 @@
-#!/bin/bash
-  
-oneTimeSetUp(){
+#!/usr/bin/env bats
+
+setup(){
   . ./jenkinsOp.sh
 }
 
-test_parseJson(){
+@test "parseJson" {
   response='{"_class":"org.jenkinsci.plugins.workflow.job.WorkflowJob","color":"blue"}'
   val=$(jsonField "$response" "color")
-  assertEquals "blue" "$val"
+  [ "$val" == "blue" ]
 }
 
-test_loadBranches(){
+@test "loadBranches" {
   branches=$(getAvailableBranches)
-  #no arrays support in posix :-/ ....
-  #assertEquals "ivy-core_ci" ${branches}
+  [[ " ${branches[@]} " =~ "master" ]] # contains master
 }
 
-skip_openDir(){
+@test "openDir" {
+  skip "avoid opened file browser"
   . ./jenkinsGet.sh
   openDir .
 }

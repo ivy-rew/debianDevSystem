@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v shunit2)" ]; then
-  sudo apt install -y shunit2
+if ! [ -x "$(command -v bats)" ]; then
+  sudo apt install -y bats
 fi
 
-shunit2 `ls -v *_test.sh`
+bats .
