@@ -28,19 +28,19 @@ fi
 
 getAvailableBranches()
 {
-  JSON=`curl -s "${URL}/api/json?tree=jobs\[name\]"`
-  BR=`jsonField "${JSON}" "name" \
-   | sed -e 's|%2F|/|' `
-  echo "${BR}"
+  local JSON=$(curl -s "${URL}/api/json?tree=jobs\[name\]")
+  local BRANCHES="$(jsonField "${JSON}" "name" \
+   | sed -e 's|%2F|/|' )"
+  echo ${BRANCHES}
 }
 
 getAvailableTestJobs()
 {
-  JSON=`curl -s "https://$JENKINS/api/json?tree=jobs\[name\]"`
-  JOBS=$(jsonField "$JSON" "name" \
+  local JSON=$(curl -s "https://$JENKINS/api/json?tree=jobs\[name\]")
+  local JOBS="$(jsonField "$JSON" "name" \
    | grep 'ivy-core_test' \
-   | sed -e 's|%2F|/|' )
-  echo $JOBS
+   | sed -e 's|%2F|/|' )"
+  echo ${JOBS}
 }
 
 getHealth()

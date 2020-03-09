@@ -10,6 +10,12 @@ test_parseJson(){
   assertEquals "blue" "$val"
 }
 
+test_loadBranches(){
+  branches=$(getAvailableBranches)
+  #no arrays support in posix :-/ ....
+  #assertEquals "ivy-core_ci" ${branches}
+}
+
 skip_openDir(){
   . ./jenkinsGet.sh
   openDir .
