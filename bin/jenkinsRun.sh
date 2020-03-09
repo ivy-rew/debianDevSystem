@@ -63,6 +63,10 @@ function noColor()
   echo -E $1 | sed -E "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g"
 }
 
+function goodbye(){
+  printf "\nHave a nice day! 👍"
+}
+
 function chooseBranch()
 {
   BRANCHES_RAW=$( getAvailableBranches )
@@ -82,7 +86,6 @@ function chooseBranch()
         break
     fi
     if [ "$OPTION" == "!exit" ]; then
-        echo 'Have a nice day! 👍'
         break
     else
         BRANCH=$(noColor "${OPTION}")
@@ -93,6 +96,7 @@ function chooseBranch()
 }
 
 if [[ "$1" != "test" ]]; then
+  trap goodbye EXIT
   chooseBranch
 fi
 
