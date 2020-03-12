@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# to run this script use: bash <(curl -Ss https://tinyurl.com/vhhm3zz)
+# to run this script use: bash <(curl -Ls -w %{url_effective} https://tinyurl.com/vhhm3zz)
 
 # turn of akward mouse acceleartion: otherwise host is hard to handle using VNC mouse
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
