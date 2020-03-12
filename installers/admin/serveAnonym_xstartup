@@ -10,4 +10,12 @@ unset DBUS_SESSION_BUS_ADDRESS
 [ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
 vncconfig -iconic &
 #dbus-launch --exit-with-session gnome-session &
-exec /usr/bin/cinnamon-session & 
+
+if [ -x "$(command -v cinnamon-session)" ]; then
+  # linux-mint
+  exec /usr/bin/cinnamon-session & 
+else 
+  # ubuntu 18.10 ...
+  exec /usr/lib/gnome-session/gnome-session-binary --session=ubuntu & 
+fi
+

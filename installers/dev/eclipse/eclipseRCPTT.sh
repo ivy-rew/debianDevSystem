@@ -1,10 +1,12 @@
 #!/bin/bash
 
 version=2.4.3
+if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
+  version=$1
+fi
 
 dlUrl=https://mirrors.dotsrc.org/eclipse//rcptt/release/$version/ide/rcptt.ide-$version-linux.gtk.x86_64.zip
-if [ ! -z "$1" ]
-  then
+if [[ "$1" == http* ]]; then
     # simplify nightly installation via unique URI from https://www.eclipse.org/rcptt/download/
     dlUrl=$1
     # version from URI:
