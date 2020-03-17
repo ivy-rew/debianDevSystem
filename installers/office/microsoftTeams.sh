@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo="https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/"
-version="teams_1.3.00.958_amd64.deb"
-wget "${repo}/${version}"
-sudo dpkg -i "${version}"
+curl -sS https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/ms-teams stable main" > /etc/apt/sources.list.d/teams.list'
+sudo apt update
+sudo apt install -y teams
