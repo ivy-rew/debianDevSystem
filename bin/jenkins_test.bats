@@ -18,6 +18,8 @@ setup(){
 @test "loadJobs" {
   jobs=$(getAvailableTestJobs)
   [[ " ${jobs[@]} " =~ "ivy-core_test-bpm-exec" ]]
+  [[ " ${jobs[@]} " =~ "ivy-core_ci-windows" ]]
+  [[ " ${jobs[@]} " != *ivy-core_techdoc* ]]
 }
 
 @test "connectability" {
