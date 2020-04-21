@@ -5,7 +5,7 @@ source "$DIR/jenkinsOp.sh"
 
 function triggerBuilds() {
     BRANCH=$1
-    local JOBS=('ivy-core_ci' 'ivy-core_product' $(getAvailableTestJobs) )
+    local JOBS=( 'ivy-core_product' $(getAvailableTestJobs) )
     
     COLOR_BRANCH=${C_GREEN}${BRANCH}${C_OFF}
     if [ "$HEALTH" == "true" ] ; then
