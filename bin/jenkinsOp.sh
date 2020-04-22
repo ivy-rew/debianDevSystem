@@ -131,9 +131,15 @@ requestBuild()
     export CRUMB="$CRUMB" #re-use for follow up requests
   fi
 
-  STATUS=$(curl --write-out %{http_code} --silent --output /dev/null -L -I -X POST \
-    -u "$JENKINS_USER:$JENKINS_TOKEN" \
-    "$RUN_URL/build?delay=0sec" -H "$CRUMB")
+  local RUN_PARAMS=(-L -X POST)
+  RUN_PARAMS+=(--write-out %{http_code} --silent --output /dev/null)
+  if [[ "${RUN_URL}" = *ivy-core_product* ]]; then
+    # always build a mac for me :)
+    RUN_PARAMS+=(--form "json={'parameter': {'name': 'mvnParams', 'value': '-Pivy.package.mac64'}}")
+  fi
+  RUN_PARAMS+=(-u "$JENKINS_USER:$JENKINS_TOKEN")
+
+  STATUS=$(curl "${RUN_PARAMS[@]}" "$RUN_URL/build?delay=0sec" -H "$CRUMB")
   echo $STATUS
 }
 
