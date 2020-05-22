@@ -3,6 +3,17 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$DIR/jenkinsOp.sh"
 
+
+function health(){
+    BRANCH=$1
+    BRANCH_ENCODED=`encodeForDownload $BRANCH`
+    local JOBS=( 'ivy-core_product' $(getAvailableTestJobs) )
+    local STATE=`jobStatus JOBS[@]`
+    for S in ${STATE[*]}; do
+        printf "${S}\n"
+    done
+}
+
 function triggerBuilds() {
     BRANCH=$1
     local JOBS=( 'ivy-core_product' $(getAvailableTestJobs) )
@@ -10,7 +21,7 @@ function triggerBuilds() {
     COLOR_BRANCH=${C_GREEN}${BRANCH}${C_OFF}
     if [ "$HEALTH" == "true" ] ; then
         echo -e "getting health of ${COLOR_BRANCH}"
-        SEL_JOBS=$(jobStatus JOBS[@] )
+        watch -d "${DIR}/jenkinsRun.sh health '${BRANCH}'"
     else
         echo -e "triggering builds for ${COLOR_BRANCH}"
         SEL_JOBS=${JOBS[@]}
@@ -105,6 +116,11 @@ function chooseBranch()
     fi
   done
 }
+
+if [[ "$1" == "health" ]]; then
+  health "$2"
+  exit
+fi
 
 if [[ "$1" != "test" ]]; then
   trap goodbye EXIT
