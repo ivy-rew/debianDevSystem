@@ -102,7 +102,7 @@ triggerBuild()
   RESPONSE=$( requestBuild ${JOB_URL} )
   echo -e "[ $( statusColor ${RESPONSE} ) ] @ $JOB_URL"
   
-  if [ "$RESPONSE" == 404 ] ; then
+  if [ "$RESPONSE" == 404 ] || [ "$RESPONSE" == 409 ] ; then
       # job may requires a manual rescan to expose our new branch | isolate in sub bash to avoid conflicts!
       SCANNED=$( rescanBranches "https://$JENKINS/job/$RUN_JOB/" 3>&1 1>&2 2>&3 )
       # re-try
