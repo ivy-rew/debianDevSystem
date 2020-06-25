@@ -1,10 +1,15 @@
 #!/bin/bash
 
-version=2019-12
-if [ ! -z "$1" ]
-  then
+version=2020-06
+if [ ! -z "$1" ];then
     version=$1
 fi
+version=$(dialog --inputbox "Which ECLIPSE version?" 0 0 "$version" 2>&1 >/dev/tty)
+if [[ "$version" == 255 ]]; then
+  echo "aborting: no eclipse version selected"
+  exit 201
+fi
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd /tmp
