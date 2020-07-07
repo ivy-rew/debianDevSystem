@@ -12,6 +12,9 @@ sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 sudo defaults write /var/db/launchd.db/com.apple.launchd/overrides.plist com.apple.screensharing -dict Disabled -bool false
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
 
+# close terminal on exit function
+plutil -replace "Window Settings".Basic.shellExitAction -integer 1 ~/Library/Preferences/com.apple.Terminal.plist
+
 # prefer bash over akward 'zsh': mainly for .bash_profile and .bashrc support
 chsh -s /bin/bash
 
