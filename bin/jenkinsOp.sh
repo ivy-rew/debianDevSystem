@@ -10,7 +10,6 @@ fi
 
 JENKINS="jenkins.ivyteam.io"
 URL="https://${JENKINS}/job/${JOB}/"
-JENKINS_USER=`whoami`
 DIR="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 
 ENV="$DIR/.env"
@@ -20,6 +19,9 @@ else
     echo "'$ENV' file missing. Adapt it form '.env.template' in order to use all features of jenkins CLI"
 fi
 
+if [ -z ${JENKINS_USER} ]; then
+    JENKINS_USER=`whoami`
+fi
 
 # ensure dependent binaries exist
 if ! [ -x "$(command -v curl)" ]; then
