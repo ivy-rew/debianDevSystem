@@ -24,15 +24,13 @@ chsh -s /bin/bash
 ## homebrew:formulae
 brew install wget
 brew install htop
+brew install tree
 
 ## homebrew:casks
-brew cask install firefox
+brew install --cask firefox
 
 #auto-boot configurator
-brew cask install clover-configurator
-
-# jdk 11
-brew cask install homebrew/cask-versions/java11
+brew install --cask opencore-configurator
 
 # maven
 brew install mvnvm
