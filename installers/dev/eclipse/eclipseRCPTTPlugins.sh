@@ -17,7 +17,7 @@ sudo ./rcptt \
 -repository \
 http://download.eclipse.org/releases/photon,\
 http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
-http://andrei.gmxhome.de/eclipse/ \
+https://raw.githubusercontent.com/iloveeclipse/plugins/latest/ \
 -installIUs \
 org.eclipse.epp.mpc.feature.group,\
 org.eclipse.m2e.feature.feature.group,\
