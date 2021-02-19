@@ -3,7 +3,7 @@
 # to run this script use: bash <(curl -Ls -w %{url_effective} https://tinyurl.com/vhhm3zz)
 
 # turn of akward mouse acceleartion: otherwise host is hard to handle using VNC mouse
-defaults write .GlobalPreferences com.apple.mouse.scaling -1
+sudo defaults write .GlobalPreferences com.apple.mouse.scaling -1
 
 # enable ssh
 sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
@@ -11,6 +11,10 @@ sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 # enable vnc/screen sharing
 sudo defaults write /var/db/launchd.db/com.apple.launchd/overrides.plist com.apple.screensharing -dict Disabled -bool false
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
+
+# show me the real world of my disK
+sudo defaults write com.apple.finder AppleShowAllFiles true
+sudo killall Finder
 
 # prefer bash over akward 'zsh': mainly for .bash_profile and .bashrc support
 chsh -s /bin/bash
