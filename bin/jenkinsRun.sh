@@ -16,7 +16,7 @@ function health(){
 
 function triggerBuilds() {
     BRANCH=$1
-    local JOBS=( 'ivy-core_product' $(getAvailableTestJobs) )
+    local JOBS=( $(getAvailableTestJobs) )
     
     COLOR_BRANCH=${C_GREEN}${BRANCH}${C_OFF}
     if [ "$HEALTH" == "true" ] ; then
