@@ -40,7 +40,7 @@ getAvailableTestJobs()
 {
   local JSON=$(curl -sS "https://$JENKINS/api/json?tree=jobs\[name\]")
   local JOBS="$(jsonField "$JSON" "name" \
-   | grep 'ivy-core_test\|ivy-core_ci' \
+   | grep 'ivy-core_product\|ivy-core_test\|ivy-core_ci' \
    | sed -e 's|%2F|/|' )"
   echo ${JOBS}
 }
