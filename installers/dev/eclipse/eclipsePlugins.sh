@@ -14,7 +14,7 @@ sudo ./eclipse \
 -repository \
 http://download.eclipse.org/releases/latest,\
 http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
-http://andrei.gmxhome.de/eclipse/,\
+https://raw.githubusercontent.com/iloveeclipse/plugins/latest/,\
 https://dl.bintray.com/subclipse/releases/subclipse/4.2.x/,\
 http://www.liclipse.com/text/updates,\
 https://ecd-plugin.github.io/update/ \
