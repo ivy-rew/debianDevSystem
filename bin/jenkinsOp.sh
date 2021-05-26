@@ -172,7 +172,7 @@ createView()
   BRANCH=$1
   BRANCH_ENCODED=`encode $BRANCH`
   MYVIEWS_URL="https://$JENKINS/user/${JENKINS_USER}/my-views"
-  curl -sS -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name=test --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
+  curl -sS -k -X POST -u "$JENKINS_USER:$JENKINS_TOKEN" -H "$CRUMB" --form name="${BRANCH}" --form   mode=hudson.model.ListView --form json="{'name': '${BRANCH}', 'mode': 'hudson.model.ListView', 'useincluderegex': 'on'}" "${MYVIEWS_URL}/createView"
   CONFIG_URL="${MYVIEWS_URL}/view/${BRANCH_ENCODED}/config.xml"
   curl -k -sS -X GET "${CONFIG_URL}" -o viewConf.xml
   ISSUE_REGEX=$( echo $BRANCH | sed -e 's|.*/|\.*|')
