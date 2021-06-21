@@ -15,7 +15,6 @@ sudo ./eclipse \
 http://download.eclipse.org/releases/latest,\
 http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
 https://raw.githubusercontent.com/iloveeclipse/plugins/latest/,\
-https://dl.bintray.com/subclipse/releases/subclipse/4.2.x/,\
 http://www.liclipse.com/text/updates,\
 https://ecd-plugin.github.io/update/ \
 -installIUs \
@@ -23,10 +22,6 @@ org.eclipse.wb.rcp.feature.feature.group,\
 PathToolsFeature.feature.group,\
 AnyEditTools.feature.group,\
 org.brainwy.liclipsetext.feature.feature.group,\
-\
-org.tigris.subversion.subclipse.feature.group,\
-org.tigris.subversion.clientadapter.svnkit.feature.feature.group,\
-\
 org.sf.feeling.decompiler,\
 org.sf.feeling.decompiler.cfr,\
 org.sf.feeling.decompiler.jad,\
