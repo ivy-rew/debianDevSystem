@@ -1,13 +1,10 @@
 #!/bin/bash
 
-version=2021-06
+defVersion=2021-06
 if [ ! -z "$1" ];then
-    version=$1
-fi
-version=$(dialog --inputbox "Which ECLIPSE version?" 0 0 "$version" 2>&1 >/dev/tty)
-if [[ "$version" == 255 ]]; then
-  echo "aborting: no eclipse version selected"
-  exit 201
+  version=$1
+else
+  read -p "Download Eclipse RCP version [${defVersion}]: " version && version=${version:-${defVersion}}
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
