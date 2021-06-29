@@ -1,8 +1,11 @@
 #!/bin/bash
 
-version=2.4.3
+#version=2.5.1
 if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
   version=$1
+else
+  defVersion=2.5.1
+  read -p "Download RCPTT version [${defVersion}]: " version && version=${version:-${defVersion}}
 fi
 
 dlUrl=https://mirrors.dotsrc.org/eclipse//rcptt/release/$version/ide/rcptt.ide-$version-linux.gtk.x86_64.zip
