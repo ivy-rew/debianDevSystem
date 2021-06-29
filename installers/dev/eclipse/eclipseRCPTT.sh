@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#version=2.5.1
 if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
   version=$1
 else
