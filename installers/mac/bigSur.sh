@@ -23,6 +23,6 @@ fi
 
 ./fetch-macOS-v2.py
 
-qemu-img convertBaseSystem.dmg -O raw BaseSystem.img
+qemu-img convert BaseSystem.dmg -O raw BaseSystem.img
 
 echo "provided '$(pwd)/BaseSystem.img' successfully."
