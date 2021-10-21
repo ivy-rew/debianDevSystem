@@ -1,6 +1,8 @@
 #!/bin/bash  
 
-source jenkinsGet.sh
+DIR="$( cd "$( dirname "${BASH_SOURCE}" )" && pwd )"
+
+source $DIR/jenkinsGet.sh
 
 BRANCH=master
 if [ ! -z "$1" ]
