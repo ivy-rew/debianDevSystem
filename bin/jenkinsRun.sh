@@ -7,7 +7,7 @@ source "$DIR/jenkinsOp.sh"
 function health(){
     BRANCH=$1
     BRANCH_ENCODED=`encodeForDownload $BRANCH`
-    local JOBS=( 'ivy-core_product' $(getAvailableTestJobs) )
+    local JOBS=( $(getAvailableTestJobs) )
     local STATE=`jobStatus JOBS[@]`
     for S in ${STATE[*]}; do
         printf "${S}\n"
@@ -60,8 +60,7 @@ function triggerBuilds() {
     fi
 }
 
-function jobStatus()
-{
+function jobStatus(){
     declare -a JBS=("${!1}")
     local jobState=()
     for JB in ${JBS[*]}; do
@@ -70,8 +69,7 @@ function jobStatus()
     echo ${jobState[@]}
 }
 
-function noColor()
-{
+function noColor(){
   echo -E $1 | sed -E "s/\x1B\[(([0-9]{1,2})?(;)?([0-9]{1,2})?)?[m,K,H,f,J]//g"
 }
 
