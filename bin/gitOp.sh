@@ -32,7 +32,6 @@ function adaptBranchTo()
   current=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   shortTarget=$(basename $1) #only last part /master or /8.0"
   adapted="${current}_${shortTarget}" 
-  echo "preparing $adapted"
   git checkout -b "$adapted" "$current"
   git merge -q "$1"
   git push -u origin "HEAD:$adapted"
@@ -43,6 +42,7 @@ function ltsBranch()
 {
   gf
   moveBranch "lts8base"
-  adaptBranchTo "origin/master"
   adaptBranchTo "origin/release/8.0"
+  adaptBranchTo "origin/master"
+  # back to master ... (avoid compile cycles :-/)
 }
