@@ -89,8 +89,7 @@ function inspire(){
 $(tput setaf 5)${AUTHOR} $(tput setaf 6)https://thatsthespir.it/${LINK}${C_OFF}"
 }
 
-function chooseBranch()
-{
+function chooseBranch() {
   BRANCHES_RAW=$( getAvailableBranches )
   GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   BRANCHES_COLORED=$(grep -C 100 --color=always -E "${GIT_BRANCH}" <<< "${BRANCHES_RAW[@]}")

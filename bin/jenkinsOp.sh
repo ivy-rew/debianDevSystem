@@ -28,16 +28,14 @@ if ! [ -x "$(command -v curl)" ]; then
   sudo apt install -y curl
 fi
 
-getAvailableBranches()
-{
+getAvailableBranches(){
   local JSON=$(curl -sS "${URL}/api/json?tree=jobs\[name\]")
   local BRANCHES="$(jsonField "${JSON}" "name" \
    | sed -e 's|%2F|/|' )"
   echo ${BRANCHES}
 }
 
-getAvailableTestJobs()
-{
+getAvailableTestJobs(){
   local JSON=$(curl -sS "https://$JENKINS/api/json?tree=jobs\[name\]")
   local JOBS="$(jsonField "$JSON" "name" \
    | grep 'ivy-core_product\|ivy-core_test\|ivy-core_ci' \
@@ -45,8 +43,7 @@ getAvailableTestJobs()
   echo ${JOBS}
 }
 
-getHealth()
-{
+getHealth(){
   JOB="$1"
   BRANCH="$2"
   API_URI="https://${JENKINS}/job/${JOB}/job/${BRANCH}/api/json?tree=color"
@@ -71,8 +68,7 @@ colorToEmo(){
   echo $EMO
 }
 
-jsonField()
-{
+jsonField(){
   local FIELD=$2
   echo $1 | grep -o -E "\"${FIELD}\":\"([^\"]*)" | sed -e "s|\"${FIELD}\":\"||g"
 }
@@ -81,8 +77,8 @@ C_GREEN="$(tput setaf 2)"
 C_RED="$(tput setaf 1)"
 C_YELLOW="$(tput setaf 3)"
 C_OFF="$(tput sgr0)"
-statusColor()
-{
+
+statusColor(){
   local STATUS=$1
   if [[ "$STATUS" == "2"* ]] ; then
     echo "${C_GREEN}${STATUS}${C_OFF}"
@@ -95,8 +91,7 @@ statusColor()
   fi
 }
 
-triggerBuild()
-{
+triggerBuild(){
   RUN_JOB=$1
   BRANCH=$2
 
@@ -113,8 +108,7 @@ triggerBuild()
   fi
 }
 
-requestBuild()
-{
+requestBuild(){
   RUN_URL=$1
   if [ -z ${JENKINS_TOKEN+x} ]; then
       echo "Jenkins API token not found as enviroment variable called 'JENKINS_TOKEN'. Therefore password for jenkins must be entered:"
@@ -145,8 +139,7 @@ requestBuild()
   echo $STATUS
 }
 
-rescanBranches()
-{
+rescanBranches(){
   JOB_URL=$1
   ACTION="build?delay=0"
   SCAN_URL="$JOB_URL$ACTION"
@@ -166,8 +159,7 @@ rescanBranches()
   printf "\n"
 }
 
-createView()
-{
+createView(){
   # prepare a simple view: listing all jobs of my feature branch
   BRANCH=$1
   BRANCH_NAME=$( echo $BRANCH | sed -e 's|/|_|')
@@ -180,12 +172,10 @@ createView()
   echo "View created: ${MYVIEWS_URL}/view/${BRANCH_NAME}/"
 }
 
-encode()
-{
+encode(){
   echo $1 | sed -e 's|/|%2F|' 
 }
 
-encodeForDownload()
-{
+encodeForDownload(){
   echo $1 | sed -e 's|/|%252F|' 
 }
