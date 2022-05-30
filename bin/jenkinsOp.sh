@@ -2,7 +2,7 @@
 
 SELECT=$1
 
-JOB=ivy-core_ci
+JOB=core_ci
 if [ ! -z "$3" ]
   then
     JOB=$3
@@ -38,7 +38,7 @@ getAvailableBranches(){
 getAvailableTestJobs(){
   local JSON=$(curl -sS "https://$JENKINS/api/json?tree=jobs\[name\]")
   local JOBS="$(jsonField "$JSON" "name" \
-   | grep 'ivy-core_product\|ivy-core_test\|ivy-core_ci' \
+   | grep 'core_product\|core_test\|core_ci' \
    | sed -e 's|%2F|/|' )"
   echo ${JOBS}
 }
@@ -129,7 +129,7 @@ requestBuild(){
 
   local RUN_PARAMS=(-L -X POST)
   RUN_PARAMS+=(--write-out %{http_code} --silent --output /dev/null)
-  if [[ "${RUN_URL}" = *ivy-core_product* ]]; then
+  if [[ "${RUN_URL}" = *core_product* ]]; then
     # always build a mac for me :)
     RUN_PARAMS+=(--form "json={'parameter': {'name': 'mvnParams', 'value': '-Pivy.package.mac64'}}")
   fi

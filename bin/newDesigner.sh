@@ -10,7 +10,7 @@ if [ ! -z "$1" ]
     BRANCH=$1
 fi
 
-JOB=ivy-core_product
+JOB=core_product
 if [ ! -z "$2" ]
   then
     JOB=$2
