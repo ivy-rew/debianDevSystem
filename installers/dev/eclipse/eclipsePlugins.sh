@@ -12,8 +12,8 @@ sudo ./eclipse \
 -clean -purgeHistory \
 -noSplash \
 -repository \
-http://download.eclipse.org/releases/latest,\
-http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
+https://download.eclipse.org/releases/latest,\
+https://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
 https://raw.githubusercontent.com/iloveeclipse/plugins/latest/,\
 http://www.liclipse.com/text/updates,\
 https://ecd-plugin.github.io/update/ \
