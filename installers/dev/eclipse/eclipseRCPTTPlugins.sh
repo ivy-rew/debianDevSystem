@@ -1,7 +1,7 @@
 #!/bin/bash
 
 version=$1
-ECLIPSE_HOME="/opt/rcptt$version.ide/rcptt"
+ECLIPSE_HOME="/opt/eclipse.rcptt/rcptt$version.ide/rcptt"
 
 # installs:
 #-- Marketplace
@@ -15,8 +15,8 @@ sudo ./rcptt \
 -application org.eclipse.equinox.p2.director \
 -noSplash \
 -repository \
-http://download.eclipse.org/releases/photon,\
-http://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
+https://download.eclipse.org/releases/latest,\
+https://cdn.rawgit.com/sandipchitale/pathtools/1.0.64/PathToolsUpdateSite/site.xml,\
 https://raw.githubusercontent.com/iloveeclipse/plugins/latest/ \
 -installIUs \
 org.eclipse.epp.mpc.feature.group,\

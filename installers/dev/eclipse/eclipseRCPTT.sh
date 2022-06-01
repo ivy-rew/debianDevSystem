@@ -3,7 +3,7 @@
 if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
   version=$1
 else
-  defVersion=2.5.1
+  defVersion=2.5.3
   read -p "Download RCPTT version [${defVersion}]: " version && version=${version:-${defVersion}}
 fi
 
@@ -23,7 +23,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd /tmp
 wget $dlUrl
-sudo unzip rcptt.ide*.zip -d /opt/rcptt$version.ide
+sudo unzip rcptt.ide*.zip -d /opt/eclipse.rcptt/rcptt$version.ide
 rm rcptt.ide*.zip
 
 $DIR/eclipseRCPTTPlugins.sh $version
