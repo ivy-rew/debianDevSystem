@@ -13,8 +13,8 @@ $DIR/firefox/installFirefox.sh
 $DIR/installChromium.sh
 
 # screenshot
-$DIR/installShutter.sh
-$DIR/installPeekGifRecorder.sh
+sudo apt install -y shutter
+sudo apt install -y peek
 
 # password manager
 sudo apt install -y keepassx
