@@ -12,4 +12,4 @@ if [ -z "$loopBack" ]; then
 fi
 
 cd "${DIR}/Linux-Fake-Background-Webcam"
-python3.8 fake.py "$@"
+python3 fake.py "$@"
