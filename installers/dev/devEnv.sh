@@ -24,8 +24,8 @@ sudo apt install -y libswt-gtk-4-java
 # composite installers
 $DIR/docker-ce.sh
 $DIR/updatePostman.sh
-$DIR/eclipseRCP.sh
-$DIR/eclipseRCPTT.sh
+$DIR/eclipse/eclipseRCP.sh
+$DIR/eclipse/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
 $DIR/vs-code/installer.sh
 
