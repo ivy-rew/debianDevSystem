@@ -1,6 +1,6 @@
 #!/bin/sh
 
-def
+PATH=/usr/bin:/usr/sbin
 export XKL_XMODMAP_DISABLE=1
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
@@ -11,9 +11,11 @@ unset DBUS_SESSION_BUS_ADDRESS
 vncconfig -iconic &
 #dbus-launch --exit-with-session gnome-session &
 
-if [ -x "$(command -v cinnamon-session)" ]; then
-  # linux-mint
-  exec /usr/bin/cinnamon-session & 
+# identify the right session 'ls /usr/share/xsessions/'
+# see https://stackoverflow.com/questions/59709214/tigervncserver-crashes-unless-started-with-sudo
+if [ -x "$(command -v cinnamon-session-cinnamon2d)" ]; then
+  # linux-mint 21.0
+  exec /usr/bin/cinnamon-session-cinnamon2d & 
 else 
   # ubuntu 18.10 ...
   exec /usr/lib/gnome-session/gnome-session-binary --session=ubuntu & 
