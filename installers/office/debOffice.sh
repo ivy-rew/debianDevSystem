@@ -3,6 +3,9 @@
 sudo apt update
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# dict
+sudo apt install -y libwww-dict-leo-org-perl
+
 # cooperate 
 $DIR/pidginAndSkype.sh
 $IDR/installTeams.sh
