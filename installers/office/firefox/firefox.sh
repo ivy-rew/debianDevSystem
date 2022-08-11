@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 sudo apt install -y firefox
 
-profile=(~/.mozilla/firefox/*.default)
+profile=(~/.mozilla/firefox/*.default-release)
 
 # hide tree style tab bars..
 mkdir -p "$profile/chrome"
