@@ -21,6 +21,9 @@ git config --global credential.helper /usr/share/doc/git/contrib/credential/gnom
 sudo apt install -y libwebkit2gtk-4.0-37
 sudo apt install -y libswt-gtk-4-java
 
+# aliases
+cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
+
 # composite installers
 $DIR/docker-ce.sh
 $DIR/inodesLimit.sh
