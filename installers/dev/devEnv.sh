@@ -23,6 +23,7 @@ sudo apt install -y libswt-gtk-4-java
 
 # composite installers
 $DIR/docker-ce.sh
+$DIR/inodesLimit.sh
 $DIR/updatePostman.sh
 $DIR/eclipse/eclipseRCP.sh
 $DIR/eclipse/eclipseRCPTT.sh
