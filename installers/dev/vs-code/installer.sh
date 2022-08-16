@@ -9,4 +9,6 @@ sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/packages.micr
 sudo apt update
 sudo apt install -y code
 
-cp -v "${DIR}/settings.json" "$HOME/.config/Code/User/settings.json" 
+codeSettings="$HOME/.config/Code/User/"
+mkdir -p "$codeSettings"
+cp -v "${DIR}/settings.json" "$codeSettings/settings.json" 
