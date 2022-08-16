@@ -7,14 +7,17 @@ sudo apt install -y unattended-upgrades
 # ubuntu base (e.g jammy, trusty, ...)
 CODENAME=$(grep DISTRIB_CODENAME= /etc/upstream-release/lsb-release | cut -d'=' -f2)
 
-# sources
-sources="  'Ubuntu:${CODENAME};'\n  'Ubuntu:${CODENAME}-security';\n  'Ubuntu:${CODENAME}-updates';\n  'Ubuntu:${CODENAME}-backports';"
+config=/etc/apt/apt.conf.d/51unattended-upgrades-mint
+echo 'Unattended-Upgrade::Allowed-Origins {
+  "linuxmint:${distro_codename}";
+' | sudo tee $config
+echo "  \"Ubuntu:${CODENAME}\";
+  \"Ubuntu:${CODENAME}-security\";
+  \"Ubuntu:${CODENAME}-updates\";
+  \"Ubuntu:${CODENAME}-backports\";
+}
+" | sudo tee -a $config
 
-config=/etc/apt/apt.conf.d/50unattended-upgrades
-prefix="Unattended-Upgrade::Allowed-Origins {"
-awk "/$prefix/{print;print \"$sources\";next}1" $config | sudo tee $config
-
-echo "!!!!remove single quotes in $config manually!!!!"
 
 # verify
 sudo unattended-upgrades --verbose --dry-run
