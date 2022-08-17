@@ -7,7 +7,10 @@ if [ -f `which powerline-daemon` ]; then
 fi
 
 updateTitle(){
-  PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+  prefix=""
+  #prefix="\u@\h: "
+  location="\w\a"
+  PS1="\[\e]0;$prefix$location\]$PS1"
 }
 PROMPT_COMMAND=updateTitle
 
