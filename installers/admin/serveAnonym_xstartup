@@ -3,6 +3,7 @@
 export XKL_XMODMAP_DISABLE=1
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
+unset SSH_CLIENT
 
 # Start Gnome 3 Desktop 
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup

@@ -7,8 +7,10 @@ if [ -f `which powerline-daemon` ]; then
 fi
 
 updateTitle(){
-  prefix=""
-  #prefix="\u@\h: "
+  prefix="\u@\h: "
+  if [[ -z "$SSH_CLIENT" ]]; then
+    prefix=""
+  fi
   location="\w\a"
   PS1="\[\e]0;$prefix$location\]$PS1"
 }
