@@ -10,8 +10,9 @@ ohMyBash(){
 standalone(){
   sudo install -y python3-pip
   sudo pip3 install powerline-status
-  cat ${DIR}/powerRc | tee -a $HOME/.bashrc
+  echo "sourc ${DIR}/powerRc.sh" | tee -a $HOME/.bashrc
 }
 
 sudo apt-get install fonts-powerline
+
 standalone
