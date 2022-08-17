@@ -1,9 +1,9 @@
 #!/bin/bash
 
-sudo apt-get install gtk2-engines-murrine gtk2-engines-pixbuf
+sudo apt install -y gtk2-engines-murrine gtk2-engines-pixbuf
 
 dlDir=$HOME/Downloads/Qogir-theme
-if [-d "${dlDir}"]; then
+if ! [ -d "${dlDir}" ]; then
   git clone https://github.com/vinceliuice/Qogir-theme.git ${dlDir}
 fi
 
