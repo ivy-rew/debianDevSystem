@@ -8,11 +8,8 @@ ohMyBash(){
 }
 
 standalone(){
-  sudo install -y python3-pip
-  sudo pip3 install powerline-status
-  echo "sourc ${DIR}/powerRc.sh" | tee -a $HOME/.bashrc
+  sudo apt install -y powerline powerline-gitstatus fonts-powerline
+  echo "source ${DIR}/powerRc.sh" | tee -a $HOME/.bashrc
 }
-
-sudo apt-get install fonts-powerline
 
 standalone

@@ -16,7 +16,7 @@ updateTitle(){
 }
 PROMPT_COMMAND=updateTitle
 
-pwScript=$(ls /usr/local/lib/python*/dist-packages/powerline/bindings/bash/powerline.sh)
+pwScript=/usr/share/powerline/bindings/bash/powerline.sh
 if [ -f "$pwScript" ]; then
   source "$pwScript"
 fi
