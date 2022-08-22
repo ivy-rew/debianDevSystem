@@ -6,3 +6,4 @@ admin/debRemote.sh
 admin/debAdmin.sh
 office/debOffice.sh
 dev/devEnv.sh
+beauty/debBeauty.sh

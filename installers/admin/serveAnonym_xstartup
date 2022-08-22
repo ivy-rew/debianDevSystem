@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-def
 export XKL_XMODMAP_DISABLE=1
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
+unset SSH_CLIENT
 
 # Start Gnome 3 Desktop 
 [ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
@@ -11,11 +11,17 @@ unset DBUS_SESSION_BUS_ADDRESS
 vncconfig -iconic &
 #dbus-launch --exit-with-session gnome-session &
 
-if [ -x "$(command -v cinnamon-session)" ]; then
-  # linux-mint
-  exec /usr/bin/cinnamon-session & 
-else 
-  # ubuntu 18.10 ...
+# identify the right session 'cat /usr/share/xsessions/*.desktop'
+# then use the 'exec' binary of your .desktop of choice
+# see https://stackoverflow.com/questions/59709214/tigervncserver-crashes-unless-started-with-sudo
+
+if [ -x "$(command -v cinnamon-session-cinnamon2d)" ]; then # linux-mint 21: cinnamon
+  exec cinnamon-session-cinnamon2d
+fi 
+if [ -x "$(command -v cinnamon-session)" ]; then # linux-mint 20: cinnamon
+  exec cinnamon-session & 
+fi
+if [ -x "$(command -v /usr/lib/gnome-session/gnome-session-binary)" ]; then # ubuntu 18.10 ...
   exec /usr/lib/gnome-session/gnome-session-binary --session=ubuntu & 
 fi
 

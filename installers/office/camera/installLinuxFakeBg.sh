@@ -2,7 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-pyv=3.8 #preferred python: yet fake.py supports 3.7-3.9
+pyv=3 #preferred python: yet fake.py supports 3.7-3.9
 app="Linux-Fake-Background-Webcam"
 if ! [ -d "${DIR}/${app}" ]; then
   git clone https://github.com/fangfufu/Linux-Fake-Background-Webcam.git

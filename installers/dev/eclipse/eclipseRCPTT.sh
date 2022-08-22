@@ -23,7 +23,9 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd /tmp
 wget $dlUrl
-sudo unzip rcptt.ide*.zip -d /opt/eclipse.rcptt/rcptt$version.ide
+rcpttDir=/opt/eclipse.rcptt/rcptt${version}.ide
+sudo mkdir -p ${rcpttDir}
+sudo unzip rcptt.ide*.zip -d ${rcpttDir}
 rm rcptt.ide*.zip
 
 $DIR/eclipseRCPTTPlugins.sh $version

@@ -3,6 +3,9 @@
 sudo apt update
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# dict
+sudo apt install -y libwww-dict-leo-org-perl
+
 # cooperate 
 $DIR/pidginAndSkype.sh
 $IDR/installTeams.sh
@@ -13,8 +16,8 @@ $DIR/firefox/installFirefox.sh
 $DIR/installChromium.sh
 
 # screenshot
-$DIR/installShutter.sh
-$DIR/installPeekGifRecorder.sh
+sudo apt install -y shutter
+sudo apt install -y peek
 
 # password manager
 sudo apt install -y keepassx

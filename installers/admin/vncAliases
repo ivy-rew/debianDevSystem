@@ -1,0 +1,12 @@
+
+alias vncSession="vncserver -localhost no -name home -xstartup $HOME/.vnc/anonymous-vnc_xstartup"
+alias vncL="vncSession -geometry 1920x1200 :3"
+alias vncM="vncSession -geometry 1600x900 :2"
+alias vncS="vncSession -geometry 1366x768 :1"
+alias vncKindle="vncSession -geometry 800x600 -SecurityTypes=None --I-KNOW-THIS-IS-INSECURE :4"
+alias vncGuest="vncSession -geometry 1920x1200 -passwd $HOME/.vnc/guestpass :6"
+alias vncKillS="vncserver -kill :1"
+alias vncKillM="vncserver -kill :2"
+alias vncKillL="vncserver -kill :3"
+alias vncKillKindle="vncserver -kill :4"
+alias vncKillGuest="vncserver -kill :6"
