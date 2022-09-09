@@ -2,15 +2,16 @@
 
 cd /tmp
 
-#cleanup elder dls
-rm Postman*.tar.gz
+#cleanup older dwnlds
+archive="postman*.tar.gz"
+rm ${archive}
 rm -rf Postman
 
 wget https://dl.pstmn.io/download/latest/linux64 --content-disposition
-FILE=`find Postman*.tar.gz`
+FILE=`find ${archive}`
 FILE=${FILE%.tar.gz}
 VERSION=${FILE#Postman-linux-x64-}
-tar -xzf Postman*.tar.gz
+tar -xzf ${archive}
 
 cd /opt/postman
 sudo rm -rf
@@ -22,4 +23,4 @@ cd /tmp
 #rename 
 sudo mv -v Postman $TARGET # TODO: get rid of ugly sub directory!
 echo installed $TARGET
-rm Postman*.tar.gz
+rm ${archive}
