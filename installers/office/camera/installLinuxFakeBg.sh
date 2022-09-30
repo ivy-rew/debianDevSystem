@@ -10,7 +10,7 @@ fi
 cd "${DIR}/${app}"
 
 echo "installing python env:"
-sudo apt install "python${pyv}" "python${pyv}-dev"
+sudo apt install "python${pyv}-pip" "python${pyv}-dev"
 "pip${pyv}" install --upgrade pip
 "pip${pyv}" install --user -r requirements.txt
 
