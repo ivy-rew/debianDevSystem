@@ -15,5 +15,7 @@ cd "$DIR/v4l2loopback"
 cd ..
 
 # control camera
-sudo apt install -y v4l-utils
+if ! [ -x "$(command -v v4l-ctl)" ]; then
+  sudo apt install -y v4l-utils
+fi
 
