@@ -9,19 +9,30 @@ ignored_repos=(
 )
 
 githubRepos() {
-  curl --url "https://api.github.com/orgs/${org}/repos?per_page=100" \
-    --header "Accept: application/vnd.github+json" \
-    --header "Authorization: Bearer $GH_TOKEN"
+  ghApi="https://api.github.com/orgs/${org}/repos?per_page=100"
+  headers=(--header "Accept: application/vnd.github+json")
+  if [ ! -z "$GH_TOKEN" ]; then
+    headers+=(--header "Authorization: Bearer $GH_TOKEN")
+  fi
+  curl --url "${ghApi}" "${headers[@]}"
+}
+
+githubReposC(){
+  cache="/tmp/gh-${org}.json"
+  if [ ! -f "${cache}" ]; then
+    githubRepos > "${cache}"
+  fi
+  cat "${cache}"
 }
 
 collectRepos() {
-  githubRepos | 
-  jq -r '.[] | 
+  githubReposC | 
+    jq -r '.[] | 
     select(.archived == false) | 
     select(.is_template == false) | 
     select(.default_branch == "master") | 
     select(.language != null) | 
-    .name'
+      .name'
 }
 
 print() {
