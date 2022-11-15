@@ -2,6 +2,13 @@
 
 org="axonivy-market"
 
+ignored_repos=(
+  "market-up2date-keeper"
+  "market.axonivy.com"
+  "market"
+)
+
+
 collectRepos() {
   curl "https://api.github.com/orgs/${org}/repos?per_page=100" | 
   jq -r '.[] | 
@@ -20,6 +27,9 @@ print() {
 }
 
 status() {
+  if [[ " ${ignored_repos[@]} " =~ " $1 " ]]; then
+    return
+  fi
   repo=$1
   build="https://github.com/${org}/${repo}/actions/workflows/ci.yml"
   badge="${build}/badge.svg"
