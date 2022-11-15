@@ -13,6 +13,10 @@ newBranch(){
   git checkout -b "$1" "origin/${remote}"
 }
 
+parentCommit(){
+  git rev-list -n 1 "origin/HEAD"
+}
+
 moveBranch(){
   target="$1"
   oldParent="$2"
@@ -44,4 +48,13 @@ lts8Branch(){
   adaptBranchTo "origin/release/8.0"
   adaptBranchTo "origin/master"
   # back to master ... (avoid compile cycles :-/)
+}
+
+ltsBranch(){
+  parent=$(parentCommit)
+  gf
+  dev="dev10.0"
+  moveBranch "origin/${dev}" "$parent"
+  # push -f
+  # push origin "HEAD:${dev}"
 }
