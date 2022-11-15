@@ -14,14 +14,22 @@ githubRepos() {
     --header "Authorization: Bearer $GH_TOKEN"
 }
 
+githubReposC(){
+  cache="/tmp/gh-${org}.json"
+  if [ ! -f "${cache}" ]; then
+    githubRepos > "${cache}"
+  fi
+  cat "${cache}"
+}
+
 collectRepos() {
-  githubRepos | 
-  jq -r '.[] | 
+  githubReposC | 
+    jq -r '.[] | 
     select(.archived == false) | 
     select(.is_template == false) | 
     select(.default_branch == "master") | 
     select(.language != null) | 
-    .name'
+      .name'
 }
 
 print() {
