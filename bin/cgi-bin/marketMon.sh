@@ -27,9 +27,11 @@ status() {
 }
 
 page() {
-  echo "<html><ul>"
+  echo "<html><link type='text/css' rel='stylesheet' href='/monitor.css'>"
+  echo "<ul>"
   print
-  echo "</ul></html>"
+  echo "</ul>"
+  echo "</html>"
 }
 
 localFile() {
