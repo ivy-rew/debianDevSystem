@@ -2,7 +2,7 @@
     body {
         background-color: #222;
     }
-    a {
+    h1,h2,h3,a {
         color: #e6e6e6;
     }
 }

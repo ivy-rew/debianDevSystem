@@ -37,7 +37,10 @@ status() {
 }
 
 page() {
-  echo "<html><link type='text/css' rel='stylesheet' href='/monitor.css'>"
+  title="Action Monitor 4 ${org}"
+  css="<link type='text/css' rel='stylesheet' href='/monitor.css'>"
+  echo "<html><head><title>${title}</title>${css}</head>"
+  echo "<h3>${title}</h3>"
   echo "<ul>"
   print
   echo "</ul>"
