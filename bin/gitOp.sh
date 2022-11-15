@@ -4,8 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 alias gf='git fetch --all'
 
-function newBranch()
-{
+newBranch(){
   remote="master"
   if [ ! -z "$2" ]; then
     remote="$2"
@@ -14,21 +13,22 @@ function newBranch()
   git checkout -b "$1" "origin/${remote}"
 }
 
-function moveBranch()
-{
+moveBranch(){
   target="$1"
+  oldParent="$2"
+  if [ -z "$2" ]; then
+    oldParent="origin/HEAD"
+  fi
   echo "moving to $target"
-  git rebase --onto "$target" "origin/HEAD"
+  git rebase --onto "$target" "$oldParent"
 }
 
-function updateBranch()
-{
+updateBranch(){
   gf
   moveBranch "origin/master"
 }
 
-function adaptBranchTo()
-{
+adaptBranchTo(){
   current=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   shortTarget=$(basename $1) #only last part /master or /8.0"
   adapted="${current}_${shortTarget}" 
@@ -38,8 +38,7 @@ function adaptBranchTo()
   git checkout "$current" #back to initial
 }
 
-function ltsBranch()
-{
+lts8Branch(){
   gf
   moveBranch "lts8base"
   adaptBranchTo "origin/release/8.0"
