@@ -8,11 +8,14 @@ ignored_repos=(
   "market"
 )
 
-
-collectRepos() {
+githubRepos() {
   curl --url "https://api.github.com/orgs/${org}/repos?per_page=100" \
     --header "Accept: application/vnd.github+json" \
-    --header "Authorization: Bearer $GH_TOKEN" | 
+    --header "Authorization: Bearer $GH_TOKEN"
+}
+
+collectRepos() {
+  githubRepos | 
   jq -r '.[] | 
     select(.archived == false) | 
     select(.is_template == false) | 
