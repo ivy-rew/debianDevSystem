@@ -9,9 +9,12 @@ ignored_repos=(
 )
 
 githubRepos() {
-  curl --url "https://api.github.com/orgs/${org}/repos?per_page=100" \
-    --header "Accept: application/vnd.github+json" \
-    --header "Authorization: Bearer $GH_TOKEN"
+  ghApi="https://api.github.com/orgs/${org}/repos?per_page=100"
+  headers=(--header "Accept: application/vnd.github+json")
+  if [ ! -z "$GH_TOKEN" ]; then
+    headers+=(--header "Authorization: Bearer $GH_TOKEN")
+  fi
+  curl --url "${ghApi}" "${headers[@]}"
 }
 
 githubReposC(){
