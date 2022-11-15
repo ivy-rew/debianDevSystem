@@ -1,7 +1,8 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE}" )" && pwd )"
-cd $DIR/monitor
+PORT=7777
 
-python3 -m http.server --cgi
-firefox localhost:8000/cgi-bin/marketMon.sh
+source $DIR/.env
+firefox localhost:${PORT}/cgi-bin/marketMon.sh &
+python3 -m http.server ${PORT} --directory $DIR/monitor --cgi
