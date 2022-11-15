@@ -1,7 +1,9 @@
 #/bin/bash
 
+org="axonivy-market"
+
 collectRepos() {
-  curl https://api.github.com/orgs/axonivy-market/repos?per_page=100 | 
+  curl "https://api.github.com/orgs/${org}/repos?per_page=100" | 
   jq -r '.[] | 
     select(.archived == false) | 
     select(.is_template == false) | 
@@ -19,8 +21,8 @@ print() {
 
 status() {
   repo=$1
-  badge=https://github.com/axonivy-market/${repo}/actions/workflows/ci.yml/badge.svg
-  build=https://github.com/axonivy-market/${repo}/actions/workflows/ci.yml
+  build="https://github.com/${org}/${repo}/actions/workflows/ci.yml"
+  badge="${build}/badge.svg"
   echo "<li><a href='${build}'><img src='${badge}'/> ${repo}</a></li>"
 }
 
@@ -30,6 +32,10 @@ page() {
   echo "</ul></html>"
 }
 
-html="/tmp/marketmon.html"
-page > $html
-firefox $html
+localFile() {
+  html="/tmp/marketmon.html"
+  page > $html
+  firefox $html
+}
+
+localFile
