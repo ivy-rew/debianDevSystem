@@ -8,7 +8,7 @@ sudo apt install -y libwww-dict-leo-org-perl
 
 # cooperate 
 $DIR/pidginAndSkype.sh
-$IDR/installTeams.sh
+$DIR/installTeams.sh
 $DIR/outlook365/installOutlook.sh
 
 # browse
