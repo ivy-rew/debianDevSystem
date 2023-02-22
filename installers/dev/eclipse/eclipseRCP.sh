@@ -1,6 +1,21 @@
 #!/bin/bash
 
-defVersion=2021-06
+curmonth=$(date +%m)
+year=$(date +%Y)
+
+if [ "$curmonth" -gt "09" ]; then   
+	month="09"
+elif [ "$curmonth" -gt "06" ]; then   
+	month="06"
+elif [ "$curmonth" -gt "03" ]; then
+	month="03"
+else
+	month="12"
+	year=$(date -d "-1 year" +%Y)
+fi
+
+defVersion="$year-$month"
+
 if [ ! -z "$1" ];then
   version=$1
 else
