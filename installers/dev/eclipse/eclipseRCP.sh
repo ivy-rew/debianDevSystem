@@ -3,11 +3,11 @@
 curmonth=$(date +%m)
 year=$(date +%Y)
 
-if [ "$curmonth" > "09" ]; then   
+if [ "$curmonth" -gt "09" ]; then   
 	month="09"
-elif [ "$curmonth" > "06" ]; then   
+elif [ "$curmonth" -gt "06" ]; then   
 	month="06"
-elif [ "$curmonth" > "03" ]; then
+elif [ "$curmonth" -gt "03" ]; then
 	month="03"
 else
 	month="12"
