@@ -28,4 +28,7 @@ sudo mkdir -p ${rcpttDir}
 sudo unzip rcptt.ide*.zip -d ${rcpttDir}
 rm rcptt.ide*.zip
 
+jvm=/usr/lib/jvm/temurin-17-jdk-amd64/bin
+sudo sed -i -e 's|\-vmargs|-vm\n'"$jvm"'\n\-vmargs|g' "${rcpttDir}/rcptt/rcptt.ini"
+
 $DIR/eclipseRCPTTPlugins.sh $version
