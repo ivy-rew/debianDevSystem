@@ -1,5 +1,7 @@
 {
     "workbench.colorTheme": "Visual Studio Light",
     "editor.renderControlCharacters": true,
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "window.commandCenter": true,
+    "window.titleBarStyle": "custom"
 }
