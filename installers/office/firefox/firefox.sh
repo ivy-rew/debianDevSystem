@@ -11,4 +11,7 @@ profile=(~/.mozilla/firefox/*.default-release)
 mkdir -p "$profile/chrome"
 cp -v userChrome.css "$profile/chrome/userChrome.css"
 
-
+# enable userChrome.css
+# 1. about:config
+# 2. search for 'userprof'
+# 3. toolkit.legacyUserProfileCustomizations.stylesheets = true
