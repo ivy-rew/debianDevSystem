@@ -38,7 +38,7 @@ getAvailableBranches(){
 getAvailableTestJobs(){
   local JSON=$(curl -sS "https://$JENKINS/api/json?tree=jobs\[name\]")
   local JOBS="$(jsonField "$JSON" "name" \
-   | grep 'core_product\|core_test\|core_ci' \
+   | grep 'core_product\|core_test\|core_ci\|core_json-schema' \
    | sed -e 's|%2F|/|' )"
   echo ${JOBS}
 }
