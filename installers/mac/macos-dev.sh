@@ -28,6 +28,8 @@ brew install tree
 
 ## homebrew:casks
 brew install --cask firefox
+brew tap homebrew/cask-versions
+brew install --cask temurin17
 
 #auto-boot configurator
 brew install --cask opencore-configurator
