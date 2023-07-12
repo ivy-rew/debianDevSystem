@@ -10,9 +10,11 @@ fi
 cd "${DIR}/${app}"
 
 echo "installing python env:"
-sudo apt install "python${pyv}-pip" "python${pyv}-dev"
+sudo apt install -y "python${pyv}-pip" "python${pyv}-dev"
 "pip${pyv}" install --upgrade pip
 "pip${pyv}" install --user -r requirements.txt
+
+cat $DIR/cam-aliases | tee -a $HOME/.bash_aliases
 
 echo "running on /dev/video2"
 "python${pyv}" "${DIR}/${app}/fake.py"
