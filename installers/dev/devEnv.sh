@@ -21,6 +21,7 @@ sudo apt install -y libwebkit2gtk-4.0-37
 sudo apt install -y libswt-gtk-4-java
 
 # bash
+cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
 cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
 cat $DIR/jenkinsrun-profile | tee -a $HOME/.profile
 
