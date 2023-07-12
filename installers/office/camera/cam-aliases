@@ -1,0 +1,2 @@
+
+alias fakeCam='$HOME/debianDevSystem/installers/office/camera/runBgCam-python.sh --no-foreground --select-model 0 -W 1280 -H 720 --background-mask-update-speed 10 --threshold 50 -b $HOME/Pictures/Webcam/axonivy-team-background-2023.jpg'
