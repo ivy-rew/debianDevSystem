@@ -3,9 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo apt update
 
-sudo apt install -y openjdk-8-jdk
-sudo apt install -y openjdk-8-source
-sudo apt install -y openjdk-11-source
+$DIR/installAdoptiumJdk17.sh
+sudo apt install -y openjdk-17-source
 sudo apt install -y maven
 sudo apt install -y openjfx
 sudo apt install -y visualvm
@@ -22,6 +21,7 @@ sudo apt install -y libwebkit2gtk-4.0-37
 sudo apt install -y libswt-gtk-4-java
 
 # bash
+cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
 cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
 cat $DIR/jenkinsrun-profile | tee -a $HOME/.profile
 

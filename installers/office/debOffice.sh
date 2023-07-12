@@ -10,6 +10,10 @@ sudo apt install -y libwww-dict-leo-org-perl
 $DIR/pidginAndSkype.sh
 $DIR/installTeams.sh
 $DIR/outlook365/installOutlook.sh
+$DIR/installAuthy.sh
+
+#author
+$DIR/installHaroopad.sh
 
 # browse
 $DIR/firefox/installFirefox.sh
