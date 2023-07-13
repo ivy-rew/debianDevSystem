@@ -33,4 +33,5 @@ $DIR/eclipse/eclipseRCP.sh
 $DIR/eclipse/eclipseRCPTT.sh
 $DIR/geckodriver-install.sh
 $DIR/vs-code/installer.sh
+$DIR/node/nodejs.sh
 
