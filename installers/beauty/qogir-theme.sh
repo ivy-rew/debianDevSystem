@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo apt install -y gtk2-engines-murrine gtk2-engines-pixbuf
 
 dlDir=$HOME/Downloads/Qogir-theme
@@ -8,6 +9,8 @@ if ! [ -d "${dlDir}" ]; then
 fi
 
 ${dlDir}/install.sh
+
+dconf load /org/cinnamon/desktop/interface/ < ${DIR}/interface.dconf
 
 #firefox 
 ffProfile=$HOME/.mozilla/firefox/*.default-release
