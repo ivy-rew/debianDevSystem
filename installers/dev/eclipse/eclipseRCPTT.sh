@@ -17,18 +17,39 @@ if [[ "$1" == http* ]]; then
     version=${noarch##rcptt\.ide\-}
 fi
 
-echo "Downloading RCPTT IDE $version"
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-cd /tmp
-wget $dlUrl
 rcpttDir=/opt/eclipse.rcptt/rcptt${version}.ide
-sudo mkdir -p ${rcpttDir}
-sudo unzip rcptt.ide*.zip -d ${rcpttDir}
-rm rcptt.ide*.zip
 
-jvm=/usr/lib/jvm/temurin-17-jdk-amd64/bin
-sudo sed -i -e 's|\-vmargs|-vm\n'"$jvm"'\n\-vmargs|g' "${rcpttDir}/rcptt/rcptt.ini"
+download() {
+  echo "Downloading RCPTT IDE $version"
+  cd /tmp
+  wget $dlUrl
+  sudo mkdir -p ${rcpttDir}
+  sudo unzip rcptt.ide*.zip -d ${rcpttDir}
+  rm rcptt.ide*.zip
+}
 
+temurin() {
+  jvm=/usr/lib/jvm/temurin-17-jdk-amd64/bin
+  sudo sed -i -e 's|\-vmargs|-vm\n'"$jvm"'\n\-vmargs|g' "${rcpttDir}/rcptt/rcptt.ini"
+}
+
+menuEntry() {
+  echo -e "[Desktop Entry]\n\
+Encoding=UTF-8
+Type=Application\n\
+Exec=${rcpttDir}/rcptt/rcptt\n\
+Icon=${rcpttDir}/rcptt/icon.xpm\n
+Name=RCPTT.IDE ${version}\n\
+GenericName=rcptt.ide ${version}\n
+Terminal=false\n
+StartupNotify=false\n
+Categories=Development" > eclipse.rcptt.desktop
+  sudo cp -v eclipse.rcptt.desktop /usr/share/applications/
+}
+
+download
+temurin
+menuEntry
 $DIR/eclipseRCPTTPlugins.sh $version
+
