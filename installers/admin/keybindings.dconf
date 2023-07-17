@@ -1,0 +1,6 @@
+[/]
+looking-glass-keybinding=@as []
+
+[media-keys]
+screensaver=['<Super>l']
+terminal=['<Super>r']

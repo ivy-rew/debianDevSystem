@@ -10,4 +10,5 @@ sudo apt install -y cockpit
 sudo apt install -y gnome-system-log 
 
 ADIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+$ADIR/keybindigs.sh
 $ADIR/unattendedUpgrades.sh
