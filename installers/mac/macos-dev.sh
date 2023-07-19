@@ -2,11 +2,12 @@
 
 # to run this script use: bash <(curl -Ls -w %{url_effective} https://tinyurl.com/vhhm3zz)
 
+
+# enable ssh: you may choose to run just this line ... and run everything else from remote
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
+
 # turn of akward mouse acceleartion: otherwise host is hard to handle using VNC mouse
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
-
-# enable ssh
-sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 
 # enable vnc/screen sharing
 sudo defaults write /var/db/launchd.db/com.apple.launchd/overrides.plist com.apple.screensharing -dict Disabled -bool false
@@ -19,7 +20,7 @@ plutil -replace "Window Settings".Basic.shellExitAction -integer 1 ~/Library/Pre
 chsh -s /bin/bash
 
 #homewbrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 ## homebrew:formulae
 brew install wget

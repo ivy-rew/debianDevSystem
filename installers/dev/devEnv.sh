@@ -20,6 +20,9 @@ git config --global credential.helper /usr/share/doc/git/contrib/credential/gnom
 sudo apt install -y libwebkit2gtk-4.0-37
 sudo apt install -y libswt-gtk-4-java
 
+# utils
+sudo apt install -y meld gitk
+
 # bash
 cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
 cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
