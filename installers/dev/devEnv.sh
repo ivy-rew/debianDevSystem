@@ -8,6 +8,7 @@ sudo apt install -y openjdk-17-source
 sudo apt install -y maven
 sudo apt install -y openjfx
 sudo apt install -y visualvm
+$DIR/installMaven.sh
 
 # git
 sudo apt install -y git
