@@ -32,6 +32,10 @@ updateBranch(){
   moveBranch "origin/master"
 }
 
+cleanBranchesMerged() {
+  git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d
+}
+
 adaptBranchTo(){
   current=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   shortTarget=$(basename $1) #only last part /master or /8.0"
