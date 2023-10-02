@@ -8,14 +8,15 @@ sudo apt install -y \
     curl \
     software-properties-common
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+dockerGpg=/etc/apt/trusted.gpg.d/docker.gpg
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o $dockerGpg
 
 CODEBASE=$(lsb_release -cs)
 if [ -f "/etc/upstream-release/lsb-release" ]; then #it's a Linux Mint...
   CODEBASE=$(grep DISTRIB_CODENAME= /etc/upstream-release/lsb-release | cut -d'=' -f2)
 fi
 sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   "deb [arch=amd64 signedBy=${dockerGpg}] https://download.docker.com/linux/ubuntu \
    ${CODEBASE} \
    stable"
 
