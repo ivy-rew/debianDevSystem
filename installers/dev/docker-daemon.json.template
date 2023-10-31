@@ -1,4 +1,4 @@
 {
   "debug": true,
-  "graph": "/mnt/data/blob/docker"
+  "data-root": "/mnt/data/blob/docker"
 }
