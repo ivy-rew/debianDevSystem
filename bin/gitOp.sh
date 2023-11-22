@@ -55,9 +55,16 @@ lts8Branch(){
 }
 
 ltsBranch(){
+  devBranch "dev10.0"
+}
+
+devBranch(){
+  dev="$1"
+  if [ -z "$1" ]; then
+    dev="dev11.2"
+  fi
   parent=$(parentCommit)
   gf
-  dev="dev10.0"
   moveBranch "origin/${dev}" "$parent"
   # push -f
   # push origin "HEAD:${dev}"
