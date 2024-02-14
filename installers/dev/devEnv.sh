@@ -3,7 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo apt update
 
-$DIR/installAdoptiumJdk17.sh
+$DIR/installAdoptiumJdk.sh
+sudo apt install -y temurin-17-jdk-amd64 #lts support
 sudo apt install -y openjdk-17-source
 sudo apt install -y maven
 sudo apt install -y openjfx
