@@ -7,3 +7,4 @@ $DIR/qogir-icons.sh
 $DIR/backgrounds.sh
 
 # $DIR/bash/powerline.sh
+$DIR/zsh/installZsh.sh
