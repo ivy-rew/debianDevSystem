@@ -2,6 +2,8 @@
 
 #https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 dockerPkg(){
   sudo apt install -y \
       apt-transport-https \
@@ -28,7 +30,7 @@ dockerInst(){
   sudo apt install -y docker-compose
 
   # copy my customizations (e.g. other images dir)
-  sudo cp -v docker-daemon.json.template /etc/docker/daemon.json
+  sudo cp -v ${DIR}/docker-daemon.json.template /etc/docker/daemon.json
 
   # Add current user to docker group
   sudo usermod -aG docker "$USER"
