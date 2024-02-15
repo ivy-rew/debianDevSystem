@@ -2,9 +2,9 @@
 
 [Desktop Entry]
 Name=Outlook 365 [live]
-Exec=/home/rew/debianDevSystem/bin/outlook.sh
+Exec=outlook.sh
 Comment=
 Terminal=false
-Icon=mail-generic
+Icon=outlook365.png
 Type=Application
-Name[en_US]=outlook365.desktop
+Name[en_US]=Outlook365
