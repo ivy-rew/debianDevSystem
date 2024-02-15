@@ -21,7 +21,9 @@ EOF
 }
 
 nvmPlugin() {
-  zstyle ':omz:plugins:nvm' lazy yes
-  plugins=(git nvm)
-  source $ZSH/oh-my-zsh.sh
+  lazyNvm="zstyle ':omz:plugins:nvm' lazy yes"
+  cat ~/.zshrc\
+   | sed "s|^plugins=|${lazyNvm}\nplugins=|"\
+   | sed 's|^plugins=.*|plugins=(nvm)|'\
+   > ~/.zshrc
 }
