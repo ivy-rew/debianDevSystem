@@ -6,3 +6,5 @@ alias dockerPrune="docker system prune -a --volumes -f"
 alias javaHome17="export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64/"
 alias javaHome11="export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/"
 alias javaHome8="export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/"
+
+alias mvn10="mvn -Dmaven.repo.local=$HOME/.m2/repository10"
