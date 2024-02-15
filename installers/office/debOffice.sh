@@ -13,7 +13,8 @@ $DIR/outlook365/installOutlook.sh
 $DIR/installAuthy.sh
 
 #author
-$DIR/installHaroopad.sh
+$DIR/installRemarkable.sh
+$DIR/installMarktext.sh
 
 # browse
 $DIR/firefox/installFirefox.sh
@@ -26,3 +27,5 @@ sudo apt install -y peek
 # password manager
 sudo apt install -y keepassx
 
+# pdf-edit
+sudo apt install -y xournalpp
