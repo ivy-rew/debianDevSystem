@@ -10,7 +10,6 @@ sudo apt install -y libwww-dict-leo-org-perl
 $DIR/pidginAndSkype.sh
 $DIR/installTeams.sh
 $DIR/outlook365/installOutlook.sh
-$DIR/installAuthy.sh
 
 #author
 $DIR/installRemarkable.sh
@@ -20,12 +19,17 @@ $DIR/installMarktext.sh
 $DIR/firefox/installFirefox.sh
 $DIR/installChromium.sh
 
-# screenshot
-sudo apt install -y shutter
-sudo apt install -y peek
+# screenshot/images
+sudo apt install -y\
+ shutter\
+ peek\
+ gimp
 
-# password manager
+# passwords
 sudo apt install -y keepassx
+$DIR/installAuthy.sh
 
 # pdf-edit
-sudo apt install -y xournalpp
+sudo apt install -y\
+ xournalpp\
+ pdfarranger
