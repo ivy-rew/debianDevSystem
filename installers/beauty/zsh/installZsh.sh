@@ -9,4 +9,4 @@ chsh -s $(which zsh)
 source "${DIR}/powerline10k.sh"
 ohMyZsh
 pwrLine10k
-
+nvmPlugin

@@ -13,10 +13,7 @@ $DIR/installMaven.sh
 
 # git
 sudo apt install -y git
-## keyring integration: https://stackoverflow.com/questions/13385690/how-to-use-git-with-gnome-keyring-integration
-sudo apt install -y libgnome-keyring-dev
-cd /usr/share/doc/git/contrib/credential/gnome-keyring && sudo make
-git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+$DIR/installGitKeyring.sh
 
 # general eclipse deps
 sudo apt install -y libwebkit2gtk-4.0-37

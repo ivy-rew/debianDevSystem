@@ -29,8 +29,13 @@ dockerInst(){
   sudo apt install -y docker-ce
   sudo apt install -y docker-compose
 
-  # copy my customizations (e.g. other images dir)
-  sudo cp -v ${DIR}/docker-daemon.json.template /etc/docker/daemon.json
+  dockerBlob="/mnt/data/blob/docker" 
+  if [ -d "/mnt/data/blob/docker" ]; then
+    # copy my customizations (e.g. other images dir)
+    sudo cp -v ${DIR}/docker-daemon.json.template /etc/docker/daemon.json
+  else
+    echo "==> SKIPPING, docker images dir customization, due to missing ${dockerBlob}"
+  fi
 
   # Add current user to docker group
   sudo usermod -aG docker "$USER"
