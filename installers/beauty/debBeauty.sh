@@ -9,3 +9,6 @@ $DIR/backgrounds.sh
 
 # $DIR/bash/powerline.sh
 $DIR/zsh/installZsh.sh
+
+# terminal: adapt system theme
+dconf write /org/gnome/terminal/legacy/theme-variant "'system'"
