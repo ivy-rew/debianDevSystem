@@ -24,6 +24,7 @@ Exec=/usr/bin/pidgin\n\
 X-GNOME-Autostart-enabled=true\n\
 NoDisplay=false\n\
 Hidden=false\n\
+ICON=pidgin\n\
 Name[en_US]=pidgin.desktop\n\
 Comment[en_US]=pidgin teams\n\
 X-GNOME-Autostart-Delay=10" > $HOME/.config/autostart/pidgin.desktop
