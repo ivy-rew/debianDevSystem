@@ -1,5 +1,0 @@
-
-# include jenkinsRun
-if [ -d "cliBin" ]; then
-    PATH="cliBin:$PATH"
-fi
