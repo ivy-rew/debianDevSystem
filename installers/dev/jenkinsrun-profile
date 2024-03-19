@@ -1,5 +1,0 @@
-
-# include jenkinsRun
-if [ -d $HOME/debianDevSystem/bin ]; then
-    PATH="$HOME/debianDevSystem/bin:$PATH"
-fi
