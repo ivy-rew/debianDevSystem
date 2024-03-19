@@ -25,9 +25,9 @@ sudo apt install -y meld gitk
 # bash
 cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
 cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
-cat $DIR/jenkinsrun-profile | tee -a $HOME/.profile
 
 # composite installers
+$DIR/jenkins/installJenkinsCli.sh
 $DIR/docker-ce.sh
 $DIR/inodesLimit.sh
 $DIR/updatePostman.sh
