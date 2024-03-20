@@ -30,6 +30,7 @@ cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
 $DIR/jenkins/installJenkinsCli.sh
 $DIR/docker-ce.sh
 $DIR/inodesLimit.sh
+$DIR/installOneFetch.sh
 $DIR/updatePostman.sh
 $DIR/eclipse/eclipseRCP.sh
 $DIR/eclipse/eclipseRCPTT.sh
