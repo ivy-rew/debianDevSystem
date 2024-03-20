@@ -21,6 +21,7 @@ sudo apt install -y libswt-gtk-4-java
 
 # utils
 sudo apt install -y meld gitk
+sudo apt install -y git-quick-stats
 
 # bash
 cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
