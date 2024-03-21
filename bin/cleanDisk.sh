@@ -8,6 +8,8 @@ journalctl --disk-usage
 sudo journalctl --vacuum-size=200M
 
 # designer downloads
-rm -rf /tmp/Axon*
+rm -rfv /tmp/Axon*
 
-/home/rew/.m2/cleanOsgi.sh
+DIR="$( cd "$( dirname "${BASH_SOURCE}" )" && pwd )"
+${DIR}/cleanM2Repo.sh
+
