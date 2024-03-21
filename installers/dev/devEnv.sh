@@ -23,11 +23,8 @@ sudo apt install -y libswt-gtk-4-java
 sudo apt install -y meld gitk
 sudo apt install -y git-quick-stats
 
-# bash
-cat $DIR/dev-bashrc | tee -a $HOME/.bashrc
-cat $DIR/dev-bash_aliases | tee -a $HOME/.bash_aliases
-
 # composite installers
+$DIR/terminal/configureTerminal.sh
 $DIR/jenkins/installJenkinsCli.sh
 $DIR/docker-ce.sh
 $DIR/inodesLimit.sh
