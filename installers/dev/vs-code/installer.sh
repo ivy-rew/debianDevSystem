@@ -20,7 +20,7 @@ instSettings(){
 
 instExt() {
   code --install-extension alphabotsec.vscode-eclipse-keybindings
-  code --install-extension redhat.vscode-xml
+  code --install-extension redhat.vscode-yaml
   code --install-extension mhutchie.git-graph
   code --install-extension huizhou.githd
 }
