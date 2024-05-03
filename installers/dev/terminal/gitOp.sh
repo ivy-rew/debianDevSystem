@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 alias gf='git fetch --all'
+alias gap='git commit --amend && git push -f'
 
 newBranch(){
   remote="master"
