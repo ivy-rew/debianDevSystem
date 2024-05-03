@@ -3,5 +3,9 @@
     "telemetry.enableTelemetry": false,
     "window.commandCenter": true,
     "window.titleBarStyle": "custom",
-    "window.autoDetectColorScheme": true
+    "window.autoDetectColorScheme": true,
+
+    // more structure onto the tree:
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.tree.indent": 16
 }
