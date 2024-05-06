@@ -62,11 +62,27 @@ ltsBranch(){
 devBranch(){
   dev="$1"
   if [ -z "$1" ]; then
-    dev="dev11.2"
+    dev="dev11.3"
   fi
   parent=$(parentCommit)
   gf
   moveBranch "origin/${dev}" "$parent"
-  # push -f
-  # push origin "HEAD:${dev}"
+  echo "rebased!!"
+
+  git --no-pager log "origin/${dev}"~1..HEAD
+  echo "Force-Push it for you to upstream?"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes ) git push -f; break;;
+      No ) break;;
+    esac
+  done
+  
+  echo "Push to origin/${dev}?"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes ) git push origin "HEAD:${dev}"; break;;
+      No ) break;;
+    esac
+  done
 }
