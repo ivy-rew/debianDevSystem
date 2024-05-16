@@ -35,3 +35,4 @@ $DIR/eclipse/eclipseRCPTT.sh
 $DIR/vs-code/installer.sh
 $DIR/node/nodejs.sh
 $DIR/python/installPip.sh
+$DIR/installGhCli.sh
