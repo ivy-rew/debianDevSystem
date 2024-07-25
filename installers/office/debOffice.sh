@@ -26,8 +26,7 @@ sudo apt install -y\
  gimp
 
 # passwords
-sudo apt install -y keepassx
-$DIR/installAuthy.sh
+$DIR/installKeePassXC.sh
 
 # pdf-edit
 sudo apt install -y\
