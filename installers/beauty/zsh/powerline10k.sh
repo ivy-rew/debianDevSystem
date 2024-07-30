@@ -22,6 +22,12 @@ EOF
   sed -i 's|ZSH_THEME=".*|ZSH_THEME="powerlevel10k/powerlevel10k"|' $HOME/.zshrc
 }
 
+nerdFonts() {
+  fonts=~/.local/share/fonts
+  mkdir -p ${fonts}
+  curl -fLO --output-dir ${fonts} https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+}
+
 nvmPlugin() {
   lazyNvm="zstyle ':omz:plugins:nvm' lazy yes"
   cat ~/.zshrc\
