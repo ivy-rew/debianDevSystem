@@ -7,7 +7,9 @@ ohMyZsh() {
 }
 
 pwrLine10k() {
-  P10Kdir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+  ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
+  P10Kdir=${ZSH_CUSTOM}/themes/powerlevel10k
+  echo ${P10KDir}
   if [ ! -d ${P10Kdir} ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${P10Kdir}
   fi
