@@ -5,7 +5,7 @@ scripts to turn your linux desktop into a java dev environment up and running in
 The scripts are designed to work for me in my current working environment ... feel free to get inspired, but don't expect the scripts to work under any circumstances...
 
 ## Tested
-- Linux Mint 21 (Ubuntu 22.04 LTS)
+- Linux Mint 22 (Ubuntu 24.04 LTS)
 
 ## How to use
 1. clone or download this repo into your user home (e.g. /home/rew/debianDevSystem)

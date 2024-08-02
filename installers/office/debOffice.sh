@@ -17,7 +17,7 @@ $DIR/installMarktext.sh
 
 # browse
 $DIR/firefox/installFirefox.sh
-$DIR/installChromium.sh
+sudo apt install -y chrome
 
 # screenshot/images
 sudo apt install -y\

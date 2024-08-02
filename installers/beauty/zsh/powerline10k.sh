@@ -7,7 +7,9 @@ ohMyZsh() {
 }
 
 pwrLine10k() {
-  P10Kdir=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+  ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
+  P10Kdir=${ZSH_CUSTOM}/themes/powerlevel10k
+  echo ${P10KDir}
   if [ ! -d ${P10Kdir} ]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${P10Kdir}
   fi
@@ -18,6 +20,12 @@ pwrLine10k() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 EOF
   sed -i 's|ZSH_THEME=".*|ZSH_THEME="powerlevel10k/powerlevel10k"|' $HOME/.zshrc
+}
+
+nerdFonts() {
+  fonts=~/.local/share/fonts
+  mkdir -p ${fonts}
+  curl -fLO --output-dir ${fonts} https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
 }
 
 nvmPlugin() {
