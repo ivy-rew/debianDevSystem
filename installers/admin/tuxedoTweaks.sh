@@ -12,6 +12,12 @@ tuxedoRepo(){
   sudo apt update && apt search tuxedo 
 }
 
+tuxedoKernel(){
+  echo ":::manual steps::: https://github.com/tuxedocomputers/Tuxedo-Linux-Kernel-Self-Signed-Certificate"
+  echo ":::manual steps::: sudo apt install linux-tuxedo-24.04"
+}
+
 tuxedoRepo
+
 
 sudo apt install -y tuxedo-control-center tuxedo-drivers
