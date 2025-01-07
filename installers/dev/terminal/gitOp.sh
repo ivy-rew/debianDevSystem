@@ -5,8 +5,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 alias gf='git fetch --all'
 alias gap='git commit --amend && git push -f'
 
+defBranch(){
+  basename $(git symbolic-ref --short refs/remotes/origin/HEAD)
+}
+
 newBranch(){
-  remote="master"
+  remote=$(defBranch)
   if [ ! -z "$2" ]; then
     remote="$2"
   fi
@@ -30,7 +34,7 @@ moveBranch(){
 
 updateBranch(){
   gf
-  moveBranch "origin/master"
+  moveBranch "origin/$(defBranch)"
 }
 
 cleanBranchesMerged() {
@@ -51,18 +55,18 @@ lts8Branch(){
   gf
   moveBranch "lts8base"
   adaptBranchTo "origin/release/8.0"
-  adaptBranchTo "origin/master"
+  adaptBranchTo "origin/$(defBranch)"
   # back to master ... (avoid compile cycles :-/)
 }
 
 ltsBranch(){
-  devBranch "dev10.0"
+  devBranch "dev12.0"
 }
 
 devBranch(){
   dev="$1"
-  if [ -z "$1" ]; then
-    dev="dev11.3"
+  if [ -z "$dev" ]; then
+    exit 1
   fi
   parent=$(parentCommit)
   gf
