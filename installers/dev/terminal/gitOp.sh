@@ -60,7 +60,7 @@ lts8Branch(){
 }
 
 ltsBranch(){
-  devBranch "dev12.0"
+  devBranch "dev/12.0"
 }
 
 devBranch(){
