@@ -32,3 +32,6 @@ $DIR/installKeePassXC.sh
 sudo apt install -y\
  xournalpp\
  pdfarranger
+
+# keys+mouse
+$DIR/key-presenter/installKeyMon.sh
