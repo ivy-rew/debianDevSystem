@@ -3,7 +3,7 @@
 if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
   version=$1
 else
-  defVersion=2.5.3
+  defVersion=2.5.5
   read -p "Download RCPTT version [${defVersion}]: " version && version=${version:-${defVersion}}
 fi
 
