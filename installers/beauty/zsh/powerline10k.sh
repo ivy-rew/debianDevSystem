@@ -32,8 +32,11 @@ nerdFonts() {
 
 nvmPlugin() {
   lazyNvm="zstyle ':omz:plugins:nvm' lazy yes"
-  cat $zshrc\
+  cat ${zshrc}\
    | sed "s|^plugins=|${lazyNvm}\nplugins=|"\
    | sed 's|^plugins=.*|plugins=(nvm)|'\
-   > $zshrc
+   > $DIR/zshrc.mod
+   cp -v $DIR/zshrc.mod ${zshrc}
 }
+
+echo $zshrc
