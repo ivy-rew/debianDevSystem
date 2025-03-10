@@ -30,7 +30,7 @@ download() {
 }
 
 temurin() {
-  jvm=/usr/lib/jvm/temurin-17-jdk-amd64/bin
+  jvm=/usr/lib/jvm/temurin-21-jdk-amd64/bin
   sudo sed -i -e 's|\-vmargs|-vm\n'"$jvm"'\n\-vmargs|g' "${rcpttDir}/rcptt/rcptt.ini"
 }
 
