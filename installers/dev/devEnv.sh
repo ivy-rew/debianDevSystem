@@ -5,7 +5,7 @@ sudo apt update
 
 $DIR/installAdoptiumJdk.sh
 sudo apt install -y temurin-17-jdk-amd64 #lts support
-sudo apt install -y openjdk-17-source
+sudo apt install -y openjdk-21-source
 sudo apt install -y maven
 sudo apt install -y openjfx
 sudo apt install -y visualvm
