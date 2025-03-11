@@ -17,6 +17,14 @@ tuxedoKernel(){
   echo ":::manual steps::: sudo apt install linux-tuxedo-24.04"
 }
 
+intelGraphics() {
+  echo ":::manual steps:::  dmesg | grep i915"
+  # id=7d55
+  # favour915="xe.force_probe='!$id' i915.force_probe='$id'"
+  # sed -i 's|(GRUB_CMDLINE_LINUX_DEFAULT=".*)"|\1$favour915"|g' /etc/default/grub
+  # sudo update-grub
+}
+
 tuxedoRepo
 
 
