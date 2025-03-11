@@ -20,4 +20,4 @@ tuxedoKernel(){
 tuxedoRepo
 
 
-sudo apt install -y tuxedo-control-center tuxedo-drivers
+sudo apt install -y tuxedo-control-center tuxedo-drivers tuxedo-tomte
