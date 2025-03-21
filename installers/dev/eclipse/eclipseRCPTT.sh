@@ -3,7 +3,7 @@
 if [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
   version=$1
 else
-  defVersion=2.5.3
+  defVersion=2.5.5
   read -p "Download RCPTT version [${defVersion}]: " version && version=${version:-${defVersion}}
 fi
 
@@ -30,7 +30,7 @@ download() {
 }
 
 temurin() {
-  jvm=/usr/lib/jvm/temurin-17-jdk-amd64/bin
+  jvm=/usr/lib/jvm/temurin-21-jdk-amd64/bin
   sudo sed -i -e 's|\-vmargs|-vm\n'"$jvm"'\n\-vmargs|g' "${rcpttDir}/rcptt/rcptt.ini"
 }
 

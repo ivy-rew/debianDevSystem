@@ -11,3 +11,4 @@ ohMyZsh
 pwrLine10k
 nerdFonts
 nvmPlugin
+shortTitle

@@ -32,8 +32,15 @@ nerdFonts() {
 
 nvmPlugin() {
   lazyNvm="zstyle ':omz:plugins:nvm' lazy yes"
-  cat $zshrc\
+  cat ${zshrc}\
    | sed "s|^plugins=|${lazyNvm}\nplugins=|"\
    | sed 's|^plugins=.*|plugins=(nvm)|'\
-   > $zshrc
+   > $DIR/zshrc.mod
+   cp -v $DIR/zshrc.mod ${zshrc}
 }
+
+shortTitle(){
+  echo 'ZSH_THEME_TERM_TITLE_IDLE="%~"' | tee -a "${zshrc}"
+}
+
+echo $zshrc
