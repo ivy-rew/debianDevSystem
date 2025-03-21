@@ -39,4 +39,8 @@ nvmPlugin() {
    cp -v $DIR/zshrc.mod ${zshrc}
 }
 
+shortTitle(){
+  echo 'ZSH_THEME_TERM_TITLE_IDLE="%~"' | tee -a "${zshrc}"
+}
+
 echo $zshrc
