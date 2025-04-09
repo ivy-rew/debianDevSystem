@@ -7,3 +7,6 @@ cd ${DIR}/remarkable_debfix/
 git checkout noble
 dpkg-deb -Z xz -b old_deb remarkable_1.87_all.deb
 sudo apt install -y ./remarkable*.deb
+
+# spellchecker: https://pypi.org/project/pygtkspellcheck/
+sudo apt install -y python3-gtkspellcheck
