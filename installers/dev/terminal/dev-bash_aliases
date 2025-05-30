@@ -3,6 +3,7 @@ alias http="python3 -m http.server"
 alias eclipseDirector="/opt/eclipse.rcp/*/eclipse -nosplash -application org.eclipse.equinox.p2.director -destination $PWD"
 alias dockerPrune="docker system prune -a --volumes -f"
 
+alias javaHome21="export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64/"
 alias javaHome17="export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64/"
 alias javaHome11="export JAVA_HOME=/usr/lib/jvm/temurin-11-jdk-amd64/"
 alias javaHome8="export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/"
