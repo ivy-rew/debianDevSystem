@@ -8,7 +8,7 @@ instPkg() {
   sudo install -o root -g root -m 644 ${DIR}/packages.microsoft.gpg /usr/share/keyrings/microsoft.gpg
   rm ${DIR}/packages.microsoft.gpg
   
-  sudo tee /etc/apt/trusted.d/vscode.source > /dev/null <<EOF
+  sudo tee /etc/apt/sources.list.d/vscode.sources > /dev/null <<EOF
 Types: deb
 URIs: https://packages.microsoft.com/repos/code
 Suites: stable
