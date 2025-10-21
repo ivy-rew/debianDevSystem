@@ -6,7 +6,12 @@ alias gf='git fetch --all'
 alias gap='git commit --amend && git push -f'
 
 defBranch(){
-  basename $(git symbolic-ref --short refs/remotes/origin/HEAD)
+  branch=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null)
+  if [ $? -ne 0 ] || [ -z "$branch" ]; then
+    echo "master" #default assumption if not found
+  else
+    basename "$branch"
+  fi
 }
 
 newBranch(){
