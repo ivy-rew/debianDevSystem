@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mver=3.9.8
+mver=3.9.11
 
 wget https://dlcdn.apache.org/maven/maven-3/${mver}/binaries/apache-maven-${mver}-bin.tar.gz
 tar xzvf apache-maven-${mver}-bin.tar.gz
