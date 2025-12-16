@@ -32,6 +32,7 @@ instExt() {
   code --install-extension redhat.vscode-yaml
   code --install-extension mhutchie.git-graph
   code --install-extension huizhou.githd
+  code --install-extension catppuccin.catppuccin-vsc-icons
 }
 
 instPkg
