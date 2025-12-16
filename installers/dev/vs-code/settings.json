@@ -7,5 +7,10 @@
 
     // more structure onto the tree:
     "workbench.tree.renderIndentGuides": "always",
-    "workbench.tree.indent": 16
+    "workbench.tree.indent": 16,
+
+    "git.blame.editorDecoration.enabled": true,
+    "git.branchProtection": ["master", "release/*"],
+    "files.enableTrash": false,
+    "extensions.ignoreRecommendations": true
 }
