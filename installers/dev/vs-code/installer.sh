@@ -24,7 +24,8 @@ EOF
 instSettings(){
   codeSettings="$HOME/.config/Code/User/"
   mkdir -p "$codeSettings"
-  cp -v "${DIR}/settings.json" "$codeSettings/settings.json" 
+  cp -v "${DIR}/settings.json" "$codeSettings/settings.json"
+  cp -v "${DIR}/keybindings.json" "$codeSettings/keybindings.json"
 }
 
 instExt() {
