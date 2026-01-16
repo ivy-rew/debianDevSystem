@@ -8,9 +8,13 @@
     // more structure onto the tree:
     "workbench.tree.renderIndentGuides": "always",
     "workbench.tree.indent": 16,
+    "workbench.iconTheme": "catppuccin-latte",
 
     "git.blame.editorDecoration.enabled": true,
     "git.branchProtection": ["master", "release/*"],
     "files.enableTrash": false,
-    "extensions.ignoreRecommendations": true
+    "extensions.ignoreRecommendations": true,
+
+    // early adopt skills:
+    "chat.useAgentSkills": true
 }

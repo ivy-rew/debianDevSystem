@@ -1,0 +1,30 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+o",
+        "command": "git.openFile",
+        "when": "config.git.enabled && !git.missing && gitOpenRepositoryCount != '0' && resourceScheme =~ /^git$|^file$/"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "workbench.action.switchWindow"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.gotoSymbol",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.files.openFile",
+        "when": "true"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "-workbench.action.closeWindow"
+    },
+    {
+        "key": "ctrl+shift+w",
+        "command": "-workbench.action.closeAllEditors"
+    }
+]
