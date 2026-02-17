@@ -15,7 +15,7 @@ adoptium(){
   echo "deb [signedBy=${adoptGpg}] https://packages.adoptium.net/artifactory/deb ${CODEBASE} main" | sudo tee /etc/apt/sources.list.d/adoptium.list
 }
 
-jvm=temurin-21-jdk
+jvm=temurin-25-jdk
 if ! [ -d "/usr/lib/jvm/${jvm}-amd64" ]; then
   adoptium
   sudo apt update
