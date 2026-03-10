@@ -34,5 +34,6 @@ $DIR/eclipse/eclipseRCP.sh
 $DIR/eclipse/eclipseRCPTT.sh
 $DIR/vs-code/installer.sh
 $DIR/node/nodejs.sh
+$DIR/node/copilot.sh
 $DIR/python/installPip.sh
 $DIR/installGhCli.sh
