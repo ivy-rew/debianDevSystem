@@ -1,8 +1,9 @@
 #!/bin/bash
 
-mver=3.9.13
+mver=3.9.14
 
-wget https://dlcdn.apache.org/maven/maven-3/${mver}/binaries/apache-maven-${mver}-bin.tar.gz
+base=https://archive.apache.org/dist/maven/maven-3/${mver}/binaries
+wget ${base}/apache-maven-${mver}-bin.tar.gz
 tar xzvf apache-maven-${mver}-bin.tar.gz
 sudo mv apache-maven* /opt/
 
