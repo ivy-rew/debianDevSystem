@@ -16,5 +16,9 @@
     "extensions.ignoreRecommendations": true,
 
     // early adopt skills:
-    "chat.useAgentSkills": true
+    "chat.useAgentSkills": true,
+    // don't pollute my git history!
+    "git.addAICoAuthor": "off",
+    // rich agent tracing in the IDE
+    "github.copilot.chat.copilotDebugCommand.enabled": true
 }
