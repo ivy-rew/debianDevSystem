@@ -4,7 +4,7 @@
 # https://unix.stackexchange.com/questions/13751/kernel-inotify-watch-limit-reached
 
 
-limit=524288
+limit=2524288
 
 current=$(cat /proc/sys/fs/inotify/max_user_watches)
 
