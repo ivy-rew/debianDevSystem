@@ -35,6 +35,7 @@ instExt() {
   code --install-extension huizhou.githd
   code --install-extension catppuccin.catppuccin-vsc-icons
   code --install-extension bokix.maven-pom-editor
+  code --install-extension tihonove.stack-trace-analyzer
 }
 
 instPkg
