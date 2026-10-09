@@ -34,6 +34,8 @@ instExt() {
   code --install-extension mhutchie.git-graph
   code --install-extension huizhou.githd
   code --install-extension catppuccin.catppuccin-vsc-icons
+  code --install-extension bierner.emojisense
+
   code --install-extension bokix.maven-pom-editor
   code --install-extension tihonove.stack-trace-analyzer
 }
